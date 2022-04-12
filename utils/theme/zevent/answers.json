@@ -1,0 +1,128 @@
+[
+	{
+		"id":1,
+		"answers": [
+					{
+						"value": "2015",
+						"is_true": false
+					},
+					{
+						"value": "2016",
+						"is_true": true
+					},
+					{
+						"value": "2017",
+						"is_true": false
+					},
+					{
+						"value": "2018",
+						"is_true": false
+					}
+		]
+	},
+	{
+		"id":2,
+		"answers": [
+					{
+						"value": "Zératul",
+						"is_true": false
+					},
+					{
+						"value": "Zéra",
+						"is_true": false
+					},
+					{
+						"value": "Zérathooor",
+						"is_true": false
+					},
+					{
+						"value": "Zérator",
+						"is_true": true
+					}
+		]
+	},
+	{
+		"id":3,
+		"answers": [
+					{
+						"value": "49",
+						"is_true": false
+					},
+					{
+						"value": "50",
+						"is_true": true
+					},
+					{
+						"value": "51",
+						"is_true": false
+					},
+					{
+						"value": "1 million baby",
+						"is_true": false
+					}
+		]
+	},
+	{
+		"id":4,
+		"answers": [
+					{
+						"value": "Montgenèvre",
+						"is_true": false
+					},
+					{
+						"value": "Montcuq",
+						"is_true": false
+					},
+					{
+						"value": "Montpellier",
+						"is_true": true
+					},
+					{
+						"value": "Pas loin",
+						"is_true": false
+					}
+		]
+	},
+	{
+		"id":5,
+		"answers": [
+					{
+						"value": "Associations des tweettos bien pensant",
+						"is_true": false
+					},
+					{
+						"value": "Institut Pasteur",
+						"is_true": true
+					},
+					{
+						"value": "La Croix Rouge",
+						"is_true": false
+					},
+					{
+						"value": "Médecins sans frontières",
+						"is_true": false
+					}
+		]
+	},
+	{
+		"id":6,
+		"answers": [
+					{
+						"value": "1 Myiiions d'euro",
+						"is_true": false
+					},
+					{
+						"value": "1 094 731 €",
+						"is_true": false
+					},
+					{
+						"value": "5 724 377 €",
+						"is_true": false
+					},
+					{
+						"value": "10 064 480 €",
+						"is_true": true
+					}
+		]
+	}
+]
