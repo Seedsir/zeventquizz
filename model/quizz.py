@@ -11,12 +11,17 @@ class Quizz:
         self.questions = []
 
     def create_quizz(self):
-        with open(r"E:\zeventquizz\utils\theme\{}\questions.json".format(self.theme), "r") as questions:
-            data_questions = json.load(questions)
+        try:
+            with open(r"E:\zeventquizz\utils\theme\{}\questions.json".format(self.theme), "r") as questions:
+                data_questions = json.load(questions)
 
-        with open(r"E:\zeventquizz\utils\theme\{}\answers.json".format(self.theme), "r") as answers:
-            data_answers = json.load(answers)
-
+            with open(r"E:\zeventquizz\utils\theme\{}\answers.json".format(self.theme), "r") as answers:
+                data_answers = json.load(answers)
+        except IOError as ie:
+            raise FileNotFoundError("Merci de vérifier le thème choisi")
+        except Exception as e:
+            raise NotImplementedError(f"Unknow exception catched: {e}")
+        self.secure_creation_quizz(data_questions)
         for i in range(self.question_number):
             question = Question()
             question.select_question(data_questions)
@@ -24,9 +29,12 @@ class Quizz:
             self.questions.append(question)
             data_questions.pop(question.index)
 
+    def secure_creation_quizz(self, data):
+        if not len(data) >= int(self.question_number):
+            raise ValueError("Le nombre de question est trop important")
 
 
 if __name__ == '__main__':
-    u = Quizz("Zevent", 3)
+    u = Quizz("zevent", 150)
     u.create_quizz()
     print(u.questions)
