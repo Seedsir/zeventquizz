@@ -1,8 +1,8 @@
-from flask import Flask, render_template, redirect, request, request_finished
+from flask import Flask, render_template, redirect, request, Response
 import json
 import requests
 
-from constants import CLIENT_ID, ACCESS_TOKEN
+from constants import CLIENT_ID, ACCESS_TOKEN, CONNEXION_URL
 from model.quizz import Quizz
 from model.users import User
 
@@ -27,15 +27,22 @@ def test_connect():
 
 @app.route("/redirect_connect", methods=["GET"])
 def connect():
-    user = User()
-    return redirect(user.connect_user())
+    return redirect(CONNEXION_URL)
 
 
 @app.route("/connected")
 def connected():
-    url = request.full_path
-    print(url)
-    return "Prout"
+    return render_template("redirect.html")
+
+
+@app.route("/home")
+def home():
+    access_token = request.args.get("access_token")
+    if access_token is None:
+        raise NotImplementedError
+    user = User()
+    user.get_user()
+    return user.__dict__
 
 
 if __name__ == '__main__':
