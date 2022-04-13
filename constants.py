@@ -1,13 +1,6 @@
-QUESTION_DICT = [
-    {"id": 1, "question": "En qu'elle année le Zevent a t-il été créé?"},
-    {"id": 2, "question": "Quele est le nom du fondateur du Zevent?"},
-    {"id": 3, "question": "Combien de streamers ont été invité en 2018?"},
-    {"id": 4, "question": "Dans qu'elle ville se déroule le Zevent"},
-    {"id": 5, "question": "A quel organisme ont été reversé les fonds récoltés en 2019?"},
-    {"id": 6, "question": "Quele est le montant record récolté lors d'uin Zevent?"}
-]
-
-
-ANSWER_DICT = [
-    {"id": 1, "answer": [("Je ne saias pas", False)]}
-]
+####### Twitch #######
+CLIENT_ID = "wmun69ztxb1hjss0j3n0x6cv2gzgn0"
+ACCESS_TOKEN = "58qat2hypl3097d83y5i19u6llg890"
+REDIRECT_URI = "http://localhost:8080/connected"
+SCOPE = "channel%3Amanage%3Apolls+channel%3Aread%3Apolls"
+CONNEXION_URL = f"https://id.twitch.tv/oauth2/authorize?response_type=token&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope={SCOPE}"
