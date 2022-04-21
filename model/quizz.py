@@ -1,4 +1,5 @@
 import json
+from decimal import *
 
 from model.question import Question
 
@@ -9,6 +10,7 @@ class Quizz:
         self.theme = theme.lower()
         self.question_number = question_number
         self.questions = []
+        self.progress = None
 
     def create_quizz(self):
         try:
@@ -32,6 +34,15 @@ class Quizz:
     def secure_creation_quizz(self, data):
         if not len(data) >= int(self.question_number):
             raise ValueError("Le nombre de question est trop important")
+
+    def quizz_progress(self, index: int):
+        progress = index / self.question_number * 100
+        self.progress = int(progress)
+        return self.progress
+
+    def read_quizz(self):
+        for question in self.questions:
+            question.get_answers()
 
 
 if __name__ == '__main__':

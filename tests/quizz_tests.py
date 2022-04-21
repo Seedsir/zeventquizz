@@ -14,3 +14,10 @@ def test_quizz_size():
     with pytest.raises(ValueError) as ve:
         quizz.create_quizz()
         assert ve.value == "Le nombre de question est trop important"
+
+def test_progress_quizz():
+    quizz = Quizz("Zevent", 24)
+    index = 1
+    assert isinstance(index / quizz.question_number * 100, float)
+    progress = quizz.quizz_progress(index)
+    assert isinstance(progress, int)
