@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, Response
+from flask import Flask, render_template, redirect, request, jsonify
 import json
 import requests
 
@@ -8,6 +8,33 @@ from model.users import User
 
 app = Flask(__name__)
 
+def get_label():
+    import uuid
+    return str(uuid.uuid4())
+
+def get_answer():
+    return {
+        "label": get_label(),
+        "is_right_answer": True
+    }
+
+def get_questions():
+    return {
+        'label': get_label(),
+        'answer': [get_answer() for x in range(3)]
+    }
+
+def get_quizz():
+    return {
+        'id': 1,
+        'label': get_label(),
+        'questions': [get_questions() for x in range(10)]
+    }
+
+@app.route('/quizz', methods=['GET'])
+def quizz():
+    quizz = [get_quizz() for _ in range(10)]
+    return jsonify(quizz)
 
 @app.route("/")
 def index():
