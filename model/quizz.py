@@ -1,5 +1,4 @@
 import json
-from decimal import *
 
 from model.question import Question
 

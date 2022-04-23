@@ -1,0 +1,35 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Page d'acceuil</title>
+</head>
+
+<body>
+    <h1>Créer votre Battle</h1>
+    <p>Je suis dans la vue de la création de battle</p>
+    <form action="/battle_suscribe" method="POST">
+        <label for="themes">Selectionnez un thème</label>
+        <select id="themes" name="themes">
+            {% for theme in themes %}
+            <option value="{{ theme }}"> {{ theme }}</option>
+            {% endfor %}
+        </select>
+        <label for="number_streamers">Selectionnez un nombre de Streamer participant</label>
+        <select id="number_streamers" name="number_streamers">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <label for="number_questions">Selectionnez un nombre de question</label>
+        <select id="number_questions" name="number_questions">
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+        </select>
+        <button type="submit">Démarrez la battle</button>
+    </form>
+</body>
+
+</html>
