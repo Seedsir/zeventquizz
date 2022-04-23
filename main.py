@@ -1,46 +1,51 @@
-from flask import Flask, render_template, redirect, request, jsonify
+from flask import Flask, render_template, redirect, request, jsonify, make_response, g
 
-from constants import CONNEXION_URL
-from model.quizz import Quizz
-from model.users import User
+from model.battle import BattleQuizz
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    mon_dict = {"test": "Alors"}
-    quizz = Quizz("Zevent", 3)
-    quizz.create_quizz()
-    for question in quizz.questions:
-        index = str(quizz.questions.index(question))
-        mon_dict["iteration-{}".format(index)] = question.__dict__
-    return jsonify(mon_dict)
-
-
-@app.route("/test_connect", methods=['GET'])
-def test_connect():
-    return render_template("test_connect.html")
-
-
-@app.route("/redirect_connect", methods=["GET"])
-def connect():
-    return redirect(CONNEXION_URL)
-
-
-@app.route("/connected")
-def connected():
-    return render_template("redirect.html")
+    return render_template("welcome.html")
 
 
 @app.route("/home")
 def home():
-    access_token = request.args.get("access_token")
-    if access_token is None:
-        raise NotImplementedError
-    user = User()
-    user.get_user()
-    return user.__dict__
+    return render_template("home.html")
+
+
+@app.route("/create_battle", methods=['GET'])
+def create_battle():
+    themes = ['Zevent', 'League of Legend', 'Fornite', 'Dark Souls']
+    r = make_response(
+        render_template("create_battle.html", themes=themes)
+    )
+    r.status = "200"
+    return r
+
+
+@app.route("/battle_suscribe", methods=['POST'])
+def battle_suscribe():
+    data = request.data
+    theme = 'Zevent'
+    number_question = 2
+    streamer_list = ['Zerator', 'misterMV']
+    global battle
+    battle = BattleQuizz(streamer_list, theme, number_question)
+    battle.get_teams()
+    return render_template("battle_suscribe.html", battle=battle)
+
+
+@app.route("/create_tournament")
+def create_tournament():
+    return render_template("create_tournament.html")
+
+
+@app.route("/battle/<theme>/<uuid>")
+def quizz(theme, uuid):
+    battle.quizz.create_quizz()
+    return render_template("quizz.html", battle=battle)
 
 
 if __name__ == '__main__':
