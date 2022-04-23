@@ -1,8 +1,6 @@
-from flask import Flask, render_template, redirect, request, Response
-import json
-import requests
+from flask import Flask, render_template, redirect, request, jsonify
 
-from constants import CLIENT_ID, ACCESS_TOKEN, CONNEXION_URL
+from constants import CONNEXION_URL
 from model.quizz import Quizz
 from model.users import User
 
@@ -17,7 +15,7 @@ def index():
     for question in quizz.questions:
         index = str(quizz.questions.index(question))
         mon_dict["iteration-{}".format(index)] = question.__dict__
-    return mon_dict
+    return jsonify(mon_dict)
 
 
 @app.route("/test_connect", methods=['GET'])
