@@ -14,6 +14,16 @@ def index():
 def home():
     return render_template("home.html")
 
+def get_theme(theme):
+    return {
+        "label": theme
+    }
+
+@app.route('/api/themes', methods=['GET'])
+def theme():
+    themes = ['Zevent', 'League of Legend', 'Fornite', 'Dark Souls']
+    themes = [get_theme(theme) for theme in themes]
+    return jsonify(themes)
 
 @app.route("/create_battle", methods=['GET'])
 def create_battle():
