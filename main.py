@@ -14,6 +14,19 @@ def index():
 def home():
     return render_template("home.html")
 
+
+
+
+
+
+
+
+
+
+
+
+
+################### THEME ##############################3
 def get_theme(theme):
     return {
         "label": theme
@@ -24,6 +37,27 @@ def theme():
     themes = ['Zevent', 'League of Legend', 'Fornite', 'Dark Souls']
     themes = [get_theme(theme) for theme in themes]
     return jsonify(themes)
+###################################################
+
+
+
+################ TEAM ##########################
+
+def get_team(team_label):
+    return {
+        "label": team_label
+    }
+
+@app.route('/api/team', methods=['GET'])
+def team():
+    teams = ['MisterMV', 'Zerator', 'Jacky', 'Michel']
+    teams = [get_team(team) for team in teams]
+    return jsonify(teams)
+
+
+#####################################################
+
+
 
 @app.route("/create_battle", methods=['GET'])
 def create_battle():
