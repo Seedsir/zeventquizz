@@ -1,1 +1,3 @@
-There is coming don't worry
+# ZeventQuizz - The best Quizz in the world
+
+![Pytest](https://github.com/Seedsir/zeventquizz/actions/workflows/pytest.yml/badge.svg)
