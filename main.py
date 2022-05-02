@@ -58,6 +58,53 @@ def team():
 #####################################################
 
 
+############### BATTLE ##############################
+def get_mock_battle():
+    return {
+        "id": 1,
+        "questions": [
+            {
+                "id": 1,
+                "label": "En quelle annee est ne bernard ?",
+                "answers": [
+                    {
+                        "id": 1,
+                        "label": "1900"
+                    },
+                    {
+                        "id": 2,
+                        "label": "1990"
+                    },
+                    {
+                        "id": 3,
+                        "label": "1999"
+                    }
+                ]
+            }
+        ]
+    }
+
+def get_mock_battle_id():
+    return {
+        "battleId": 1
+    }
+
+@app.route('/api/battle', methods=['POST'])
+def create_battle_two():
+    #TODO: Some backend
+
+    return jsonify(get_mock_battle_id())
+    
+@app.route('/api/battle/<int:battle_id>', methods=['GET'])
+def get_battle():
+    #TODO: Some backend
+    return jsonify(get_mock_battle())
+
+
+
+##############################################
+
+
 
 @app.route("/create_battle", methods=['GET'])
 def create_battle():
