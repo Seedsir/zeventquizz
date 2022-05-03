@@ -2,7 +2,7 @@ import json
 import os
 
 from model.question import Question
-
+from pathlib import Path
 
 class Quizz:
 
@@ -15,10 +15,11 @@ class Quizz:
     def create_quizz(self):
         try:
             current_path = os.path.dirname(__file__)
-            with open(os.path.relpath(f'..\\utils\\theme\\{self.theme}\\questions.json', current_path), "r") as questions:
+            print(current_path)
+            with open(Path(current_path) / '..' / 'utils' / 'theme' / self.theme / 'questions.json', "r") as questions:
                 data_questions = json.load(questions)
 
-            with open(os.path.relpath(f'..\\utils\\theme\\{self.theme}\\answers.json', current_path), "r") as answers:
+            with open(Path(current_path) / '..' / 'utils' / 'theme' / self.theme / 'answers.json', "r") as answers:
                 data_answers = json.load(answers)
         except IOError as ie:
             raise FileNotFoundError("Merci de vérifier le thème choisi")
