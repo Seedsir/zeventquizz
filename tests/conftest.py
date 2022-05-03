@@ -4,7 +4,7 @@ import pytest
 def app():
     from main import application
 
-    yield application
+    yield application.app
 
 
 @pytest.fixture()
