@@ -18,6 +18,14 @@ class BattleQuizz:
         url = f"http://127.0.0.1:8080/battle/{self.theme}/{token}"
         return url
 
-    def get_teams(self):
+    def create_teams(self):
         for streamer in self.streamer_list:
             self.teams.append(Team(streamer))
+
+    def get_teams(self):
+        if not len(self.teams) > 0:
+            return "Aucune équipe n'a été crée pour le moment"
+        dict_teams = {}
+        for equipe in self.teams:
+            dict_teams[f'Equipe {self.teams.index(equipe)}'] = equipe.streamer
+        return dict_teams

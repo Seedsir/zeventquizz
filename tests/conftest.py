@@ -2,9 +2,9 @@ import pytest
 
 @pytest.fixture()
 def app():
-    from main import app
+    from main import Application
 
-    yield app
+    yield Application.app
 
 
 @pytest.fixture()

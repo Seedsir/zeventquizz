@@ -1,7 +1,8 @@
 import json
+import os
 
 from model.question import Question
-
+from pathlib import Path
 
 class Quizz:
 
@@ -13,10 +14,12 @@ class Quizz:
 
     def create_quizz(self):
         try:
-            with open(r"E:\zeventquizz\utils\theme\{}\questions.json".format(self.theme), "r") as questions:
+            current_path = os.path.dirname(__file__)
+            print(current_path)
+            with open(Path(current_path) / '..' / 'utils' / 'theme' / self.theme / 'questions.json', "r") as questions:
                 data_questions = json.load(questions)
 
-            with open(r"E:\zeventquizz\utils\theme\{}\answers.json".format(self.theme), "r") as answers:
+            with open(Path(current_path) / '..' / 'utils' / 'theme' / self.theme / 'answers.json', "r") as answers:
                 data_answers = json.load(answers)
         except IOError as ie:
             raise FileNotFoundError("Merci de vérifier le thème choisi")
@@ -45,6 +48,6 @@ class Quizz:
 
 
 if __name__ == '__main__':
-    u = Quizz("zevent", 150)
+    u = Quizz("zevent", 3)
     u.create_quizz()
     print(u.questions)
