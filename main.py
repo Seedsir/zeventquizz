@@ -69,15 +69,18 @@ def get_mock_battle():
                 "answers": [
                     {
                         "id": 1,
-                        "label": "1900"
+                        "label": "1900",
+                        'is_right_answer': True
                     },
                     {
                         "id": 2,
-                        "label": "1990"
+                        "label": "1990",
+                        'is_right_answer': False
                     },
                     {
                         "id": 3,
-                        "label": "1999"
+                        "label": "1999",
+                        'is_right_answer': False
                     }
                 ]
             }
@@ -96,7 +99,7 @@ def create_battle_two():
     return jsonify(get_mock_battle_id())
     
 @app.route('/api/battle/<int:battle_id>', methods=['GET'])
-def get_battle():
+def get_battle(battle_id):
     #TODO: Some backend
     return jsonify(get_mock_battle())
 
