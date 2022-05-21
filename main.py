@@ -1,7 +1,9 @@
+import requests
 from flask import Flask, render_template, redirect, request, jsonify, make_response, g
 
 from constants import THEMES
 from model.battle import BattleQuizz
+from model.users import User
 
 
 class Application:
@@ -76,6 +78,13 @@ class Application:
         application.battle.quizz.create_quizz()
         return render_template("quizz.html", battle=application.battle)
 
+
+    @staticmethod
+    @app.route("/authorize")
+    def connect_user():
+        user = User()
+        response = requests.get(user.connect_user())
+        return response.content
 
 if __name__ == '__main__':
     application = Application()

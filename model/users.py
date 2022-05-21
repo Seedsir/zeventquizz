@@ -1,5 +1,7 @@
 from constants import CONNEXION_URL, ACCESS_TOKEN, CLIENT_ID
 import requests
+import random
+import string
 
 class User:
     def __init__(self):
@@ -8,7 +10,10 @@ class User:
         self.profile_image = None
 
     def connect_user(self):
-        return CONNEXION_URL
+        state = self.generate_random_string()
+        nonce = self.generate_random_string()
+        url = f"{CONNEXION_URL}&state={state}&nonce={nonce}"
+        return url
 
     def get_user(self):
         data = {
@@ -23,6 +28,12 @@ class User:
             if self.profile_image is None:
                 # TODO trouver une url de logo par default
                 pass
+
+    def generate_random_string(self):
+        length = random.randint(10, 15)
+        choises = string.ascii_lowercase + string.digits
+        return ''.join(random.choice(choises) for i in range(length))
+
 
 class Player(User):
 
