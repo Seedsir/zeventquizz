@@ -30,3 +30,6 @@ class EntityManager:
 
     def create(self, item: Dict) -> Dict:
         return self._storage.add(item)
+
+    def update(self, item: Dict) -> Dict:
+        return self._storage.add(item)

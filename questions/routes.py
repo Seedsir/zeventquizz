@@ -24,11 +24,19 @@ def create():
 
 @app.route("/questions/<question_id>", methods=["GET"])
 def get_question(question_id):
-    question = question_manager.get(question_id)
-    return question
+    return question_manager.get(question_id)
 
 
 @app.route("/questions/<question_id>", methods=["DELETE"])
 def delete_question(question_id):
-    question = question_manager.delete(question_id)
-    return question
+    return question_manager.delete(question_id)
+
+
+@app.route("/questions/<question_id>/answers", methods=["GET"])
+def get_question_answers(question_id):
+    return question_manager.get_question_answers(question_id)
+
+
+@app.route("/questions/<question_id>/answers/<answer_id>", methods=["PUT"])
+def add_answer_to_questions(question_id, answer_id):
+    return question_manager.add_answer_to_question(question_id, answer_id)
