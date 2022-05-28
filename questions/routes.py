@@ -33,6 +33,9 @@ class MemoryStorage:
             raise ItemNotFoundException
         return item
 
+    def delete(self, id: str) -> None:
+        del self._storage[id]
+
 
 class QuestionsManager:
     def __init__(self) -> None:
@@ -52,6 +55,14 @@ class QuestionsManager:
             logger.warning(f"item {question_id} not found")
         finally:
             return question
+
+    def delete(self, question_id: str) -> Dict:
+        question = self.get(question_id)
+        if not question:
+            return question
+
+        self._storage.delete(question_id)
+        return question
 
 
 question_manager = QuestionsManager()
@@ -73,4 +84,10 @@ def create():
 @questions_app.route("/questions/<question_id>", methods=["GET"])
 def get_question(question_id):
     question = question_manager.get(question_id)
+    return question
+
+
+@questions_app.route("/questions/<question_id>", methods=["DELETE"])
+def delete_question(question_id):
+    question = question_manager.delete(question_id)
     return question
