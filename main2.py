@@ -1,10 +1,12 @@
 from flask_api import FlaskAPI
 
-from questions.routes import questions_app
+from questions.routes import app as questions_app
+from answers.routes import app as answer_app
 
 app = FlaskAPI(__name__)
 
 app.register_blueprint(questions_app)
+app.register_blueprint(answer_app)
 
 
 def main():

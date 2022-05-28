@@ -1,7 +1,7 @@
 from uuid import uuid4
 from typing import Dict
 
-from questions.exceptions import ItemNotFoundException
+from core.exceptions import ItemNotFoundException
 
 
 class MemoryStorage:
