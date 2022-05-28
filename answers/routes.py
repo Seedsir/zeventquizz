@@ -14,7 +14,7 @@ def get_all():
     return answer_manager.get_all()
 
 
-@app.route("/answer", methods=["POST"])
+@app.route("/answers", methods=["POST"])
 def create_answer():
     body = request.get_json()
     return answer_manager.create(body)
