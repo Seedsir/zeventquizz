@@ -80,11 +80,12 @@ class Application:
 
 
     @staticmethod
-    @app.route("/authorize")
+    @app.route("/connected")
     def connect_user():
         user = User()
         response = requests.get(user.connect_user())
-        return response.content
+        print(response.content)
+        return redirect("/home")
 
 if __name__ == '__main__':
     application = Application()

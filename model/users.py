@@ -10,10 +10,7 @@ class User:
         self.profile_image = None
 
     def connect_user(self):
-        state = self.generate_random_string()
-        nonce = self.generate_random_string()
-        url = f"{CONNEXION_URL}&state={state}&nonce={nonce}"
-        return url
+        return CONNEXION_URL
 
     def get_user(self):
         data = {
