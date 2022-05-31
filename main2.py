@@ -2,7 +2,7 @@ from flask_api import FlaskAPI
 
 from questions.routes import app as questions_app
 from answers.routes import app as answer_app
-from answers.routes import app as quizz_app
+from quizz.routes import app as quizz_app
 
 app = FlaskAPI(__name__)
 
