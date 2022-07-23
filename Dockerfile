@@ -1,5 +1,6 @@
 FROM python:3.10-alpine
 COPY . /app
 WORKDIR /app
-CMD pip install -r requirements.txt
-ENTRYPOINT [ "python", "main2.py" ]
+RUN pip install -r requirements.txt
+EXPOSE 5000
+CMD gunicorn --config gunicorn.conf.py
