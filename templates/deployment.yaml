@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zeventquizz
+spec:
+  selector:
+    matchLabels:
+      app: zeventquizz
+  template:
+    metadata:
+      labels:
+        app: zeventquizz
+    spec:
+      containers:
+        - name: zeventquizz
+          image: zeventquizz
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5000
