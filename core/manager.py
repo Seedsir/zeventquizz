@@ -1,4 +1,4 @@
-from storage.storage import MemoryStorage
+from model.storage.storage import MemoryStorage
 from typing import Dict
 import logging
 from core.exceptions import ItemNotFoundException

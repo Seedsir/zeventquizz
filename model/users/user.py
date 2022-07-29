@@ -1,5 +1,6 @@
-from constants import CONNEXION_URL, ACCESS_TOKEN, CLIENT_ID
+from utils.constants import CONNEXION_URL, ACCESS_TOKEN, CLIENT_ID
 import requests
+
 
 class User:
     def __init__(self):
@@ -23,6 +24,7 @@ class User:
             if self.profile_image is None:
                 # TODO trouver une url de logo par default
                 pass
+
 
 class Player(User):
 

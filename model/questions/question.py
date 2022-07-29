@@ -1,6 +1,6 @@
 import random
 
-from model.response import Response
+from model.answers.response import Response
 
 
 class Question:

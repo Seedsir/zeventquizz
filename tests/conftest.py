@@ -2,7 +2,7 @@ import pytest
 
 @pytest.fixture()
 def app():
-    from main import Application
+    from utils.main_to_delete import Application
 
     yield Application.app
 

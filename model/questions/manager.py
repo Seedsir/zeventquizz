@@ -1,7 +1,5 @@
-from answers.routes import answer_manager
+from model.answers.routes import answer_manager
 from core.manager import EntityManager
-from storage.storage import MemoryStorage
-from typing import Dict
 import logging
 
 logger = logging.getLogger(__name__)

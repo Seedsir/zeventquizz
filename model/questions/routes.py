@@ -1,8 +1,6 @@
-from typing import Dict
-from uuid import uuid4
 from flask import Blueprint, request
 
-from questions.manager import QuestionsManager
+from model.questions.manager import QuestionsManager
 
 app = Blueprint("questions", __name__)
 

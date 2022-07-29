@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from quizz.manager import QuizzManager
+from model.quizz.manager import QuizzManager
 
 app = Blueprint("quizz", __name__)
 
