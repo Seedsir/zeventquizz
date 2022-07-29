@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from answers.manager import AnswerManager
+from model.answers.manager import AnswerManager
 
 
 app = Blueprint("answers", __name__)

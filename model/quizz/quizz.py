@@ -1,7 +1,7 @@
 import json
 import os
 
-from model.question import Question
+from model.questions.question import Question
 from pathlib import Path
 
 class Quizz:
