@@ -1,6 +1,6 @@
 import random
 from main import db
-from model.answers.response import Response
+from model.answers.answer import Answer
 
 
 class Question(db.Model):
@@ -21,6 +21,6 @@ class Question(db.Model):
         self.value = question_list[self.index]["value"]
 
     def get_answers(self, answers_list: list):
-        self.answers = Response(self.id).get_possible_answers(answers_list)
+        self.answers = Answer(self.id).get_possible_answers(answers_list)
 
 

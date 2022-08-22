@@ -2,12 +2,12 @@ import json
 from main import db
 
 
-class Response(db.Model):
+class Answer(db.Model):
     __tablename__ = "answers"
 
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.String())
-    is_true = db.Column(db.Bolean())
+    is_true = db.Column(db.Boolean())
 
     def __init__(self, question_id):
         self.question_id = question_id
