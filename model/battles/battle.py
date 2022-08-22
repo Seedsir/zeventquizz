@@ -1,10 +1,14 @@
 from model.quizz.quizz import Quizz
 import uuid
-
+from main import db
 from model.teams.team import Team
 
 
-class BattleQuizz:
+class BattleQuizz(db.Model):
+    __tablename__ = "battles"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    stremers_number = db.Column(db.Integer())
 
     def __init__(self, streamers_list: list, theme: str, question_number: int):
         self.streamer_list = streamers_list

@@ -1,9 +1,14 @@
 import random
-
+from main import db
 from model.answers.response import Response
 
 
-class Question:
+class Question(db.Model):
+    __tablename__ = "questions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.String())
+    theme = db.Column(db.String())
 
     def __init__(self):
         self.id = None

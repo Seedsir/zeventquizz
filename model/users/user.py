@@ -1,8 +1,16 @@
 from utils.constants import CONNEXION_URL, ACCESS_TOKEN, CLIENT_ID
 import requests
+from main import db
 
 
-class User:
+class User(db.Model):
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String())
+    profile_image = db.Column(db.String())
+    team = db.Column(db.String())
+
     def __init__(self):
         self.user_id = None
         self.username = None
