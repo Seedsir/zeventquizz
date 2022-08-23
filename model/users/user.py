@@ -1,6 +1,6 @@
+from model.db import db
 from utils.constants import CONNEXION_URL, ACCESS_TOKEN, CLIENT_ID
 import requests
-from main import db
 
 
 class User(db.Model):

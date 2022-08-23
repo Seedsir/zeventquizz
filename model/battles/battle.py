@@ -1,6 +1,6 @@
+from model.db import db
 from model.quizz.quizz import Quizz
 import uuid
-from main import db
 from model.teams.team import Team
 
 

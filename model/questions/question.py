@@ -1,6 +1,6 @@
 import random
-from main import db
 from model.answers.answer import Answer
+from model.db import db
 
 
 class Question(db.Model):

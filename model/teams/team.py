@@ -1,5 +1,5 @@
+from model.db import db
 from model.users.user import Player
-from main import db
 
 
 class Team(db.Model):

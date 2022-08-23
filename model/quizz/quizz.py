@@ -1,7 +1,7 @@
 import json
 import os
-from main import db
 
+from model.db import db
 from model.questions.question import Question
 from pathlib import Path
 

@@ -1,5 +1,6 @@
 import json
-from main import db
+
+from model.db import db
 
 
 class Answer(db.Model):

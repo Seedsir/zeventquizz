@@ -7,10 +7,12 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - mescouilles
-  mescouilles:
+      - db
+    volumes:
+      - .:/app
+
+  db:
     image: postgres:latest
-    command: echo "listen_addresses = '*'" >> pg_hba.conf
     ports:
       - "5432:5432"
     environment:
