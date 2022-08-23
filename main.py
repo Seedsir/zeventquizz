@@ -1,6 +1,6 @@
-import psycopg2
 from flask_api import FlaskAPI
 
+from model.admin import admin
 from model.answers.routes import app as answers_app
 from model.battles.routes import app as battles_app
 from model.db import db
@@ -13,7 +13,6 @@ from model import User, Quizz, BattleQuizz, Team, Answer
 
 
 def create_app():
-
     app = FlaskAPI(__name__)
     app.register_blueprint(questions_app)
     app.register_blueprint(answers_app)
@@ -29,4 +28,8 @@ def create_app():
         # ignore duplicate errors due to multiple workers running
         except Exception:
             pass
+
+        admin.init_app(app)
+
+    app.secret_key = 'super secret key'
     return app
