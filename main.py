@@ -1,4 +1,7 @@
+import time
+
 from flask_api import FlaskAPI
+import sqlalchemy
 
 from model.admin import admin
 from model.answers.routes import app as answers_app
@@ -14,6 +17,7 @@ from model import User, Quizz, BattleQuizz, Team, Answer
 
 def create_app():
     app = FlaskAPI(__name__)
+    app.secret_key = 'super secret key'
     app.register_blueprint(questions_app)
     app.register_blueprint(answers_app)
     app.register_blueprint(quizz_app)
@@ -22,14 +26,20 @@ def create_app():
     app.register_blueprint(users_app)
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@db:5432/zevent_quizz"
     db.init_app(app)
-    with app.app_context():
-        try:
-            db.create_all()
-        # ignore duplicate errors due to multiple workers running
-        except Exception:
-            pass
+    create_database(app)
+    admin.init_app(app)
 
-        admin.init_app(app)
-
-    app.secret_key = 'super secret key'
     return app
+
+
+def create_database(app):
+    with app.app_context():
+        # to check that we can query the database before trying to create the db
+        for i in range(4):
+            try:
+                db.session.execute('SELECT 1')
+            except sqlalchemy.exc.OperationalError:
+                time_to_sleep = i * 2
+                print(f'Database not started yet, sleeping {time_to_sleep}')
+                time.sleep(time_to_sleep)
+        db.create_all()
