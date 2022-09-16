@@ -1,10 +1,16 @@
 import json
 import os
 
+from model.db import db
 from model.questions.question import Question
 from pathlib import Path
 
-class Quizz:
+class Quizz(db.Model):
+    __tablename__ = "quizz"
+
+    id = db.Column(db.Integer, primary_key=True)
+    questions_number = db.Column(db.Integer())
+    theme = db.Column(db.String())
 
     def __init__(self, theme: str, question_number: int):
         self.theme = theme.lower()

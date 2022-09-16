@@ -1,9 +1,14 @@
 import random
+from model.answers.answer import Answer
+from model.db import db
 
-from model.answers.response import Response
 
+class Question(db.Model):
+    __tablename__ = "questions"
 
-class Question:
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.String())
+    theme = db.Column(db.String())
 
     def __init__(self):
         self.id = None
@@ -16,6 +21,6 @@ class Question:
         self.value = question_list[self.index]["value"]
 
     def get_answers(self, answers_list: list):
-        self.answers = Response(self.id).get_possible_answers(answers_list)
+        self.answers = Answer(self.id).get_possible_answers(answers_list)
 
 

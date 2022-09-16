@@ -4,9 +4,6 @@ from model.quizz.manager import QuizzManager
 
 app = Blueprint("quizz", __name__)
 
-quizz_route = "/quizz"
-single_quizz_route = "/quizz/<quizz_id>"
-
 manager = QuizzManager()
 
 

@@ -1,7 +1,12 @@
+from model.db import db
 from model.users.user import Player
 
 
-class Team:
+class Team(db.Model):
+    __tablename__ = "teams"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
 
     def __init__(self, streamer: str):
         self.streamer = streamer

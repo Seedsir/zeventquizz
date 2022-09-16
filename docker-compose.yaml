@@ -6,3 +6,17 @@ services:
     container_name: zeventquizz
     ports:
       - "5000:5000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=zevent
+      - POSTGRES_DB=zevent_quizz
+

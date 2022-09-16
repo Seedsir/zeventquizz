@@ -3,7 +3,7 @@ from flask import Blueprint, request
 from model.users.manager import UserManager
 
 
-app = Blueprint("teams", __name__)
+app = Blueprint("users", __name__)
 
 
 user_manager = UserManager()
