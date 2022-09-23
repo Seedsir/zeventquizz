@@ -9,6 +9,9 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.String())
     theme = db.Column(db.String())
+    quizz_id = db.Column(db.Integer, db.ForeignKey('quizz.id'),
+        nullable=False)
+    answers = db.relationship('Answer', backref='question', lazy=True)
 
     def __init__(self):
         self.id = None

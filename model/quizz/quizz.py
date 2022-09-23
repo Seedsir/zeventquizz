@@ -5,12 +5,15 @@ from model.db import db
 from model.questions.question import Question
 from pathlib import Path
 
+
 class Quizz(db.Model):
     __tablename__ = "quizz"
 
     id = db.Column(db.Integer, primary_key=True)
     questions_number = db.Column(db.Integer())
     theme = db.Column(db.String())
+    battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'), nullable=False)
+    questions = db.relationship('Question', backref='quizz', lazy=True)
 
     def __init__(self, theme: str, question_number: int):
         self.theme = theme.lower()

@@ -9,6 +9,10 @@ class BattleQuizz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     stremers_number = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                        nullable=False)
+    teams = db.relationship('Team', backref='battlequizz', lazy=True)
+    quizz = db.relationship('Quizz', backref='battlequizz', lazy=True)
 
     def __init__(self, streamers_list: list, theme: str, question_number: int):
         self.streamer_list = streamers_list
