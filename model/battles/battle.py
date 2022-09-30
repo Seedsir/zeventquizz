@@ -11,6 +11,7 @@ class BattleQuizz(db.Model):
     stremers_number = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         nullable=False)
+    is_active = db.Column(db.Boolean(), nullable=False, default=False)
     teams = db.relationship('Team', backref='battlequizz', lazy=True)
     quizz = db.relationship('Quizz', backref='battlequizz', lazy=True)
 
@@ -18,17 +19,27 @@ class BattleQuizz(db.Model):
         self.streamer_list = streamers_list
         self.theme = theme
         self.quizz = Quizz(theme, question_number)
-        self.suscribe_url = self.get_suscribe_url()
         self.teams = []
 
-    def get_suscribe_url(self):
+    @property
+    def suscribe_url(self):
         token = uuid.uuid4()
-        url = f"http://127.0.0.1:8080/battle/{self.theme}/{token}"
+        url = f"http://127.0.0.1:5000/battle/{self.theme}/{token}"
         return url
 
     def create_teams(self):
         for streamer in self.streamer_list:
             self.teams.append(Team(streamer))
+
+    def start_battle(self):
+        self.is_active = True
+        db.session.add(self)
+        db.session.commit()
+
+    def end_battle(self):
+        self.is_active = False
+        db.session.add(self)
+        db.session.commit()
 
     def get_teams(self):
         if not len(self.teams) > 0:
@@ -37,3 +48,13 @@ class BattleQuizz(db.Model):
         for equipe in self.teams:
             dict_teams[f'Equipe {self.teams.index(equipe)}'] = equipe.streamer
         return dict_teams
+
+    def __str__(self):
+        return self.name
+
+    def render(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    @staticmethod
+    def get_all_battles() -> list['BattleQuizz']:
+        return BattleQuizz.query.filter_by(is_active=True).all()

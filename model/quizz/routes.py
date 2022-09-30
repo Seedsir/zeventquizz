@@ -2,7 +2,7 @@ from flask import Blueprint, request
 
 from model.quizz.manager import QuizzManager
 
-app = Blueprint("quizz", __name__)
+app = Blueprint("quizz_app", __name__)
 
 manager = QuizzManager()
 
