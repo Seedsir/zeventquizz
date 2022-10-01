@@ -15,33 +15,34 @@ class BattleQuizz(db.Model):
     teams = db.relationship('Team', backref='battlequizz', lazy=True)
     quizz = db.relationship('Quizz', backref='battlequizz', lazy=True)
 
-    def __init__(self, streamers_list: list, theme: str, question_number: int):
+    def __init__(self, name: str, streamers_list: list, theme: str, question_number: int):
+        self.name = name
         self.streamer_list = streamers_list
         self.theme = theme
         self.quizz = Quizz(theme, question_number)
         self.teams = []
 
     @property
-    def suscribe_url(self):
+    def suscribe_url(self) -> str:
         token = uuid.uuid4()
         url = f"http://127.0.0.1:5000/battle/{self.theme}/{token}"
         return url
 
-    def create_teams(self):
+    def create_teams(self) -> None:
         for streamer in self.streamer_list:
             self.teams.append(Team(streamer))
 
-    def start_battle(self):
+    def start_battle(self) -> None:
         self.is_active = True
         db.session.add(self)
         db.session.commit()
 
-    def end_battle(self):
+    def end_battle(self) -> None:
         self.is_active = False
         db.session.add(self)
         db.session.commit()
 
-    def get_teams(self):
+    def get_teams(self) -> dict:
         if not len(self.teams) > 0:
             return "Aucune équipe n'a été crée pour le moment"
         dict_teams = {}
@@ -52,9 +53,26 @@ class BattleQuizz(db.Model):
     def __str__(self):
         return self.name
 
-    def render(self):
+    def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @staticmethod
     def get_all_battles() -> list['BattleQuizz']:
         return BattleQuizz.query.filter_by(is_active=True).all()
+
+    @staticmethod
+    def create_battle(name: str, streamers: list, theme: str, question_number: int) -> None:
+        battle = BattleQuizz(name, streamers, theme, question_number)
+        db.session.add(battle)
+        db.session.commit()
+
+    @staticmethod
+    def get_battle_by_id(id: int) -> 'BattleQuizz':
+        battle = BattleQuizz.query.filter_by(id=id).first()
+        return battle
+
+    @staticmethod
+    def delete_battle_by(id: int) -> None:
+        battle = BattleQuizz.query.filter_by(id=id).first()
+        db.session.delete(battle)
+        db.session.commit()
