@@ -67,12 +67,20 @@ class BattleQuizz(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_battle_by_id(id: int) -> 'BattleQuizz':
-        battle = BattleQuizz.query.filter_by(id=id).first()
+    def get_battle_by_id(unique_id: int) -> 'BattleQuizz':
+        battle = BattleQuizz.query.filter_by(id=unique_id).first()
         return battle
 
     @staticmethod
-    def delete_battle_by(id: int) -> None:
-        battle = BattleQuizz.query.filter_by(id=id).first()
+    def delete_battle_by(unique_id: int) -> None:
+        battle = BattleQuizz.query.filter_by(id=unique_id).first()
         db.session.delete(battle)
         db.session.commit()
+
+    @staticmethod
+    def get_teams_of_battle(unique_id: int) -> dict:
+        teams_dict = {}
+        battle = BattleQuizz.query.filter_by(id=unique_id).first()
+        for team in battle.teams:
+            teams_dict[battle.teams.index(team)] = team
+        return teams_dict

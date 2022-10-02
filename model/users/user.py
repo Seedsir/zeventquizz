@@ -47,6 +47,14 @@ class User(db.Model):
         db.session.delete(user)
         db.session.commit()
 
+    @staticmethod
+    def select_a_team(username, battle_id, team_name) -> None:
+        user = User.query.filter_by(username=username).first()
+        user.battle = battle_id
+        user.team = team_name
+        db.session.add(user)
+        db.session.commit()
+
     # def connect_user(self):
     #     return CONNEXION_URL
     #
