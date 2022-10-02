@@ -33,10 +33,10 @@ def delete_battle(battle_id):
 
 
 @app.route("/battles/<battle_id>/teams", methods=["GET"])
-def delete_battle(battle_id: int):
+def get_teams_battle(battle_id: int):
     return jsonify(BattleQuizz.get_teams_of_battle(battle_id))
 
 
 @app.route("/battles/<battle_id>/<team_name>/<username>", methods=["POST"])
-def delete_battle(battle_id: int, team_name: str, username: str):
+def select_team(battle_id: int, team_name: str, username: str):
     return User.select_a_team(username, battle_id, team_name)
