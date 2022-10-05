@@ -10,20 +10,40 @@ class Question(db.Model):
     value = db.Column(db.String())
     theme = db.Column(db.String())
     quizz_id = db.Column(db.Integer, db.ForeignKey('quizz.id'),
-        nullable=False)
+                         nullable=False)
     answers = db.relationship('Answer', backref='question', lazy=True)
 
-    def __init__(self):
-        self.id = None
-        self.value = None
-        self.answers = []
+    # def __init__(self):
+    #     self.id = None
+    #     self.value = None
+    #     self.answers = []
 
-    def select_question(self, question_list: list):
-        self.index = random.randint(0, len(question_list) - 1)
-        self.id = question_list[self.index]["id"]
-        self.value = question_list[self.index]["value"]
+    def render(self) -> dict:
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-    def get_answers(self, answers_list: list):
-        self.answers = Answer(self.id).get_possible_answers(answers_list)
+    # def select_question(self, question_list: list):
+    #     self.index = random.randint(0, len(question_list) - 1)
+    #     self.id = question_list[self.index]["id"]
+    #     self.value = question_list[self.index]["value"]
 
+    @staticmethod
+    def select_questions_by_theme(limit_of_question: int, theme: str) -> list['Question']:
+        questions = Question.query.filter_by(theme=theme).limit(limit_of_question).all()
+        return questions
 
+    @staticmethod
+    def create_question(value: str, theme: str) -> None:
+        question = Question(value=value, theme=theme)
+        db.session.add(question)
+        db.session.commit()
+
+    @staticmethod
+    def delete_question_by_id(identifiant: int) -> None:
+        question = Question.query.filter_by(id=identifiant).first()
+        db.session.delete(question)
+        db.session.commit()
+
+    @staticmethod
+    def get_question_by_id(identifiant: int)-> 'Question':
+        question = Question.query.filter_by(id=identifiant).first()
+        return question

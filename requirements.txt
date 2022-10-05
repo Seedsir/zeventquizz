@@ -1,4 +1,5 @@
 Flask-API==3.0.post1
+alembic==1.8.1
 pytest==7.1.1
 requests==2.27.1
 gunicorn==20.1.0

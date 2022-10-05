@@ -54,9 +54,3 @@ class Quizz(db.Model):
     def read_quizz(self):
         for question in self.questions:
             question.get_answers()
-
-
-if __name__ == '__main__':
-    u = Quizz("zevent", 3)
-    u.create_quizz()
-    print(u.questions)
