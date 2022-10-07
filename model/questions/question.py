@@ -21,11 +21,6 @@ class Question(db.Model):
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-    # def select_question(self, question_list: list):
-    #     self.index = random.randint(0, len(question_list) - 1)
-    #     self.id = question_list[self.index]["id"]
-    #     self.value = question_list[self.index]["value"]
-
     @staticmethod
     def select_questions_by_theme(limit_of_question: int, theme: str) -> list['Question']:
         questions = Question.query.filter_by(theme=theme).limit(limit_of_question).all()
