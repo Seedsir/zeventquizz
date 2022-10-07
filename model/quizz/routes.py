@@ -1,7 +1,7 @@
 #TODO Work in progress
-# from flask import Blueprint, request
+from flask import Blueprint, request
 #
-# app = Blueprint("quizz_app", __name__)
+app = Blueprint("quizz_app", __name__)
 #
 # manager = QuizzManager()
 #
