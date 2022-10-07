@@ -1,5 +1,3 @@
-import random
-from model.answers.answer import Answer
 from model.db import db
 
 

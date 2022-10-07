@@ -23,3 +23,28 @@ class Team(db.Model):
         if len(self.viewers) > 0:
             return len(self.viewers)
         return "Aucun joueur n'a rejoint votre équipe pour le moment"
+
+    def render(self) -> dict:
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    @staticmethod
+    def get_teams(battle_id: int) -> list['Team']:
+        teams = Team.query.filter_by(battle_id=battle_id).all()
+        return teams
+
+    @staticmethod
+    def get_team_by_id(team_id: int) -> 'Team':
+        team = Team.query.filter_by(id=team_id).first()
+        return team
+
+    @staticmethod
+    def create_team(streamer: str) -> None:
+        team = Team(streamer)
+        db.session.add(team)
+        db.session.commit()
+
+    @staticmethod
+    def delete_team_by_id(team_id: int) -> None:
+        team = Team.query.filter_by(id=team_id).first()
+        db.session.delete(team)
+        db.session.commit()

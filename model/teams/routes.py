@@ -1,30 +1,25 @@
-from flask import Blueprint, request
+from flask import Blueprint, jsonify
 
-from model.teams.manager import TeamManager
-
+from model import Team
 
 app = Blueprint("teams", __name__)
 
 
-team_manager = TeamManager()
-
-
-@app.route("/teams", methods=["GET"])
-def get_all():
-    return team_manager.get_all()
+@app.route("/teams/<battle_id>", methods=["GET"])
+def get_all_team_in_battle(battle_id: int):
+    return jsonify(Team.get_teams(battle_id))
 
 
 @app.route("/teams", methods=["POST"])
-def create_team():
-    body = request.get_json()
-    return team_manager.create(body)
+def create_team(streamer: str):
+    return Team.create_team(streamer)
 
 
 @app.route("/teams/<team_id>", methods=["GET"])
-def get_team(team_id):
-    return team_manager.get(team_id)
+def get_team(team_id: int):
+    return jsonify(Team.get_team_by_id(team_id).render())
 
 
 @app.route("/teams/<team_id>", methods=["DELETE"])
-def delete_team(team_id):
-    return team_manager.delete(team_id)
+def delete_team(team_id: int):
+    return Team.delete_team_by_id(team_id)
