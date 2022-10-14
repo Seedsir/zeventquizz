@@ -1,9 +1,5 @@
-import json
-import os
-
 from model.db import db
 from model.questions.question import Question
-from pathlib import Path
 
 
 class Quizz(db.Model):
@@ -17,34 +13,13 @@ class Quizz(db.Model):
 
     def __init__(self, theme: str, question_number: int):
         self.theme = theme.lower()
-        self.question_number = question_number
-        self.questions = []
+        self.question_number = question_number  # TODO reflechir au fait que ca ne sert a rien de le garder dans l'objet
+        self.questions = Question.select_questions_by_theme(question_number, theme)
+        if question_number > len(self.questions):
+            raise Exception(  # TODO create a correcte exception
+                f"Limite maximale de questions dépassée, "
+                f"merci de ne pas dépasser {len(self.questions)} sur le thème : {self.theme}")
         self.progress = None
-
-    def create_quizz(self):
-        try:
-            current_path = os.path.dirname(__file__)
-            print(current_path)
-            with open(Path(current_path) / '..' / 'utils' / 'theme' / self.theme / 'questions.json', "r") as questions:
-                data_questions = json.load(questions)
-
-            with open(Path(current_path) / '..' / 'utils' / 'theme' / self.theme / 'answers.json', "r") as answers:
-                data_answers = json.load(answers)
-        except IOError as ie:
-            raise FileNotFoundError("Merci de vérifier le thème choisi")
-        except Exception as e:
-            raise NotImplementedError(f"Unknow exception catched: {e}")
-        self.secure_creation_quizz(data_questions)
-        for i in range(self.question_number):
-            question = Question()
-            question.select_question(data_questions)
-            question.get_answers(data_answers)
-            self.questions.append(question)
-            data_questions.pop(question.index)
-
-    def secure_creation_quizz(self, data):
-        if not len(data) >= int(self.question_number):
-            raise ValueError("Le nombre de question est trop important")
 
     def quizz_progress(self, index: int):
         progress = index / self.question_number * 100
@@ -54,3 +29,23 @@ class Quizz(db.Model):
     def read_quizz(self):
         for question in self.questions:
             question.get_answers()
+
+    def render(self) -> dict:
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    @staticmethod
+    def create_quizz(theme: str, nb_questions: int) -> 'Quizz':
+        quizz = Quizz(theme, nb_questions)
+        db.session.add(quizz)
+        db.session.commit()
+        return quizz
+
+    @staticmethod
+    def delete_quizz(identifiant: int) -> None:
+        quizz = Quizz.query.filter(id=identifiant).first()
+        db.session.delete(quizz)
+        db.session.commit()
+
+    @staticmethod
+    def get_quizz(identifiant: int) -> 'Quizz':
+        return Quizz.query.filter(id=identifiant).first()

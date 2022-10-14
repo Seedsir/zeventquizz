@@ -1,27 +1,20 @@
-#TODO Work in progress
-from flask import Blueprint, request
-#
+from flask import Blueprint, jsonify
+
+from model import Quizz
+
 app = Blueprint("quizz_app", __name__)
-#
-# manager = QuizzManager()
-#
-#
-# @app.route("/quizz", methods=["GET"])
-# def get_all():
-#     return manager.get_all()
-#
-#
-# @app.route("/quizz", methods=["POST"])
-# def create_answer():
-#     body = request.get_json()
-#     return manager.create(body)
-#
-#
-# @app.route("/quizz/<answer_id>", methods=["GET"])
-# def get_answer(answer_id):
-#     return manager.get(answer_id)
-#
-#
-# @app.route("/quizz/<answer_id>", methods=["DELETE"])
-# def delete_answer(answer_id):
-#     return manager.delete(answer_id)
+
+
+@app.route("/quizz", methods=["POST"])
+def create_quizz(theme: str, nb_questions: int):
+    return jsonify(Quizz.create_quizz(theme, nb_questions).render())
+
+
+@app.route("/quizz", methods=["DELETE"])
+def delete_quizz_by_id(identifiant: int):
+    return Quizz.delete_quizz(identifiant)
+
+
+@app.route("/quizz/<identifiant>", methods=["GET"])
+def get_quizz_by_id(identifiant: int):
+    return jsonify(Quizz.get_quizz(identifiant).render())

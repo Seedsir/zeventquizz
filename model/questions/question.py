@@ -8,13 +8,8 @@ class Question(db.Model):
     value = db.Column(db.String())
     theme = db.Column(db.String())
     quizz_id = db.Column(db.Integer, db.ForeignKey('quizz.id'),
-                         nullable=False)
+                         nullable=True)
     answers = db.relationship('Answer', backref='question', lazy=True)
-
-    # def __init__(self):
-    #     self.id = None
-    #     self.value = None
-    #     self.answers = []
 
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
