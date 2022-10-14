@@ -14,6 +14,9 @@ class Question(db.Model):
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+    def __str__(self):
+        return self.value
+
     @staticmethod
     def select_questions_by_theme(theme: str) -> list['Question']:
         questions = Question.query.filter_by(theme=theme).all()

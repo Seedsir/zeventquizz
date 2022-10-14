@@ -7,7 +7,7 @@ app = Blueprint("teams", __name__)
 
 @app.route("/teams/<battle_id>", methods=["GET"])
 def get_all_team_in_battle(battle_id: int):
-    return jsonify(Team.get_teams(battle_id))
+    return jsonify([team.render() for team in Team.get_teams(battle_id)])
 
 
 @app.route("/teams", methods=["POST"])

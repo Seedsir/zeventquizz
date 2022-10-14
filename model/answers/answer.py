@@ -19,6 +19,9 @@ class Answer(db.Model):
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+    def __str__(self):
+        return self.value
+
     @staticmethod
     def get_all_possible_answers(identifiant: int) -> list['Answer']:
         answers = Answer.query.filter_by(question_id=identifiant).all()

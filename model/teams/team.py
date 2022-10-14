@@ -27,6 +27,9 @@ class Team(db.Model):
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+    def __str__(self):
+        return self.name
+
     @staticmethod
     def get_teams(battle_id: int) -> list['Team']:
         teams = Team.query.filter_by(battle_id=battle_id).all()

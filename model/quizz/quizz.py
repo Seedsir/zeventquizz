@@ -35,6 +35,9 @@ class Quizz(db.Model):
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+    def __str__(self):
+        return f"Battle numéro {self.battle_id} - thème {self.theme}"
+
     @staticmethod
     def create_quizz(theme: str, nb_questions: int) -> 'Quizz':
         quizz = Quizz(theme, nb_questions)

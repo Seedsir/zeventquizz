@@ -7,7 +7,7 @@ app = Blueprint("answers", __name__)
 
 @app.route("/answers/<question_id>", methods=["GET"])
 def get_all_possible_answers(question_id: int):
-    return Answer.get_all_possible_answers(question_id)
+    return jsonify([answser.render() for answser in Answer.get_all_possible_answers(question_id)])
 
 
 @app.route("/answers/<question_id>/answer", methods=["GET"])
