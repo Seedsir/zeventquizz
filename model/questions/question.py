@@ -9,14 +9,14 @@ class Question(db.Model):
     theme = db.Column(db.String())
     quizz_id = db.Column(db.Integer, db.ForeignKey('quizz.id'),
                          nullable=True)
-    answers = db.relationship('Answer', backref='question', lazy=True)
+    answers = db.relationship('Answer', backref='question', lazy=False)
 
     def render(self) -> dict:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @staticmethod
-    def select_questions_by_theme(limit_of_question: int, theme: str) -> list['Question']:
-        questions = Question.query.filter_by(theme=theme).limit(limit_of_question).all()
+    def select_questions_by_theme(theme: str) -> list['Question']:
+        questions = Question.query.filter_by(theme=theme).all()
         return questions
 
     @staticmethod

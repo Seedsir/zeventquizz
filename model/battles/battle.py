@@ -12,8 +12,8 @@ class BattleQuizz(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False, default=False)
-    teams = db.relationship('Team', backref='battlequizz', lazy=True)
-    quizz = db.relationship('Quizz', backref='battlequizz', lazy=True)
+    teams = db.relationship('Team', backref='battlequizz', lazy=False)
+    quizz = db.relationship('Quizz', backref='battlequizz', lazy=False)
 
     def __init__(self, name: str, streamers_list: list, theme: str, question_number: int):
         self.name = name

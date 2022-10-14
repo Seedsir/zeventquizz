@@ -11,8 +11,8 @@ app = Blueprint("questions", __name__)
 #     return [question for question in questions]
 
 @app.route("/questions/<theme>", methods=["GET"])
-def get_questions_by_theme(limit_of_questions: int, theme: str):
-    return jsonify(Question.select_questions_by_theme(limit_of_questions, theme))
+def get_questions_by_theme(theme: str):
+    return jsonify([question.render() for question in Question.select_questions_by_theme(theme)])
 
 
 @app.route("/questions", methods=["POST"])

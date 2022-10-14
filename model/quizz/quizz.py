@@ -1,3 +1,5 @@
+from sqlalchemy.orm import joinedload
+
 from model.db import db
 from model.questions.question import Question
 
@@ -8,8 +10,8 @@ class Quizz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     questions_number = db.Column(db.Integer())
     theme = db.Column(db.String())
-    battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'), nullable=False)
-    questions = db.relationship('Question', backref='quizz', lazy=True)
+    battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'), nullable=True)
+    questions = db.relationship('Question', backref='quizz', lazy=False)
 
     def __init__(self, theme: str, question_number: int):
         self.theme = theme.lower()
@@ -42,10 +44,10 @@ class Quizz(db.Model):
 
     @staticmethod
     def delete_quizz(identifiant: int) -> None:
-        quizz = Quizz.query.filter(id=identifiant).first()
+        quizz = Quizz.query.filter_by(id=identifiant).first()
         db.session.delete(quizz)
         db.session.commit()
 
     @staticmethod
     def get_quizz(identifiant: int) -> 'Quizz':
-        return Quizz.query.filter(id=identifiant).first()
+        return Quizz.query.options(joinedload(Quizz.questions)).filter_by(id=identifiant).first()
