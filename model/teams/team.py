@@ -1,5 +1,10 @@
 from model.db import db
-from model.users.user import Player
+from model.users.user import Player, User
+
+teams_users = db.Table('teams_users',
+                       db.Column('team_id', db.Integer, db.ForeignKey('teams.id'), primary_key=True),
+                       db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
+                       )
 
 
 class Team(db.Model):
@@ -7,10 +12,10 @@ class Team(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-                        nullable=True)
     battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'),
                           nullable=True)
+    users = db.relationship('User', secondary=teams_users, lazy='subquery',
+                           backref=db.backref('users', lazy=True))
 
     def __init__(self, streamer: str):
         self.streamer = streamer
@@ -31,11 +36,6 @@ class Team(db.Model):
         return self.name
 
     @staticmethod
-    def get_teams(battle_id: int) -> list['Team']:
-        teams = Team.query.filter_by(battle_id=battle_id).all()
-        return teams
-
-    @staticmethod
     def get_team_by_id(team_id: int) -> 'Team':
         team = Team.query.filter_by(id=team_id).first()
         return team
@@ -50,4 +50,14 @@ class Team(db.Model):
     def delete_team_by_id(team_id: int) -> None:
         team = Team.query.filter_by(id=team_id).first()
         db.session.delete(team)
+        db.session.commit()
+
+    @staticmethod
+    def add_player_to_team(team_id: int, user_id: int) -> None:
+        team = Team.query.filter_by(id=team_id).first()
+        user = User.query.filter_by(id=user_id).first()
+        print(dir(team))
+        print("Salut c'est moi")
+        user.team.id = team.id
+        db.session.add(user)
         db.session.commit()

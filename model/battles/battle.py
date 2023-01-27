@@ -20,7 +20,7 @@ class BattleQuizz(db.Model):
         self.streamer_list = streamers_list
         self.theme = theme
         self.quizz = Quizz(theme, question_number)
-        self.teams = []
+        self.create_teams()
 
     @property
     def suscribe_url(self) -> str:
@@ -76,11 +76,3 @@ class BattleQuizz(db.Model):
         battle = BattleQuizz.query.filter_by(id=unique_id).first()
         db.session.delete(battle)
         db.session.commit()
-
-    @staticmethod
-    def get_teams_of_battle(unique_id: int) -> dict:
-        teams_dict = {}
-        battle = BattleQuizz.query.filter_by(id=unique_id).first()
-        for team in battle.teams:
-            teams_dict[battle.teams.index(team)] = team
-        return teams_dict

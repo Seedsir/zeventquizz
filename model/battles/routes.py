@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from model import User
+from model import User, Team
 from model.battles.battle import BattleQuizz
 from flask import jsonify
 
@@ -24,7 +24,7 @@ def get_suscribe_url():
 
 @app.route("/battles/<battle_id>", methods=["GET"])
 def get_battle(battle_id):
-    return BattleQuizz.get_battle_by_id(battle_id)
+    return jsonify(BattleQuizz.get_battle_by_id(battle_id).render())
 
 
 @app.route("/battles/<battle_id>", methods=["DELETE"])
@@ -34,7 +34,7 @@ def delete_battle(battle_id):
 
 @app.route("/battles/<battle_id>/teams", methods=["GET"])
 def get_teams_battle(battle_id: int):
-    return jsonify(BattleQuizz.get_teams_of_battle(battle_id))
+    return jsonify([team.render() for team in Team.get_teams(battle_id)])
 
 
 @app.route("/battles/<battle_id>/<team_name>/<username>", methods=["POST"])

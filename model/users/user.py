@@ -9,7 +9,6 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String())
     profile_image = db.Column(db.String())
-    team = db.relationship('Team', backref='user', lazy=True)
     battle = db.relationship('BattleQuizz', backref='user', lazy=True)
 
     def __init__(self, username: str):
