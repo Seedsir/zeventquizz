@@ -1,7 +1,7 @@
-from model.db import db
-from model.quizz.quizz import Quizz
+from models.db import db
+from models.quizz.quizz import Quizz
 import uuid
-from model.teams.team import Team
+from models.teams.team import Team
 
 
 class BattleQuizz(db.Model):

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from model.db import db
+from models.db import db
 
 
 class User(db.Model):

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 
-from model.questions.question import Question
+from models.questions.question import Question
 
 app = Blueprint("questions", __name__)
 

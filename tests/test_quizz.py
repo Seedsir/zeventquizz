@@ -1,6 +1,6 @@
 import pytest
 
-from model.quizz import Quizz
+from models.quizz import Quizz
 
 
 def test_create_quizz():

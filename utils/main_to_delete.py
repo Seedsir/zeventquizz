@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, make_response
 
 from utils.constants import THEMES
-from model.battles.battle import BattleQuizz
+from models.battles.battle import BattleQuizz
 
 
 class Application:

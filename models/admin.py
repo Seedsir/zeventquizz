@@ -1,8 +1,8 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from model import User, Answer, BattleQuizz, Quizz, Team, Question
+from models import User, Answer, BattleQuizz, Quizz, Team, Question
 
-from model.db import  db
+from models.db import  db
 
 admin = Admin()
 admin.add_view(ModelView(User, db.session))

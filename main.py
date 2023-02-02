@@ -3,17 +3,17 @@ import time
 from flask_api import FlaskAPI
 import sqlalchemy
 
-from model.admin import admin
-from model.answers.routes import app as answers_app
-from model.battles.routes import app as battles_app
-from model.db import db
-from model.questions.routes import app as questions_app
-from model.quizz.routes import app as quizz_app
-from model.teams.routes import app as teams_app
-from model.users.routes import app as users_app
-from model.Twitch.routes import app as twitch
+from models.admin import admin
+from models.answers.routes import app as answers_app
+from models.battles.routes import app as battles_app
+from models.db import db
+from models.questions.routes import app as questions_app
+from models.quizz.routes import app as quizz_app
+from models.teams.routes import app as teams_app
+from models.users.routes import app as users_app
+from models.Twitch.routes import app as twitch
 
-from model import User, Quizz, BattleQuizz, Team, Answer
+from models import User, Quizz, BattleQuizz, Team, Answer
 
 
 def create_app():

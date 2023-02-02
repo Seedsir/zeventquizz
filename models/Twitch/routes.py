@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from model.Twitch.oauth_twitch import TwitchAuth
+from models.Twitch.oauth_twitch import TwitchAuth
 
 app = Blueprint("twitch", __name__)
 

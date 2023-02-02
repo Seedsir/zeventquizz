@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from model import Team
+from models import Team
 
 app = Blueprint("teams", __name__)
 

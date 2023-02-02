@@ -2,7 +2,7 @@ import requests
 from urllib.parse import urlencode
 from flask import redirect
 from utils.constants import CLIENT_ID, CLIENT_SECRET
-from model.users.user import User
+from models.users.user import User
 from utils.constants import SCOPE
 
 

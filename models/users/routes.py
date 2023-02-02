@@ -3,7 +3,7 @@ from http.client import HTTPException
 import requests
 from flask import Blueprint, request, abort
 
-from model.users.user import User
+from models.users.user import User
 from flask import jsonify
 
 from utils.constants import CLIENT_ID

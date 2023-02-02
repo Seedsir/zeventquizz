@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 
-from model import User, Team
-from model.battles.battle import BattleQuizz
+from models import User, Team
+from models.battles.battle import BattleQuizz
 from flask import jsonify
 
 app = Blueprint("battles", __name__)

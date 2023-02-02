@@ -1,7 +1,7 @@
 from sqlalchemy.orm import joinedload
 
-from model.db import db
-from model.questions.question import Question
+from models.db import db
+from models.questions.question import Question
 
 
 class Quizz(db.Model):

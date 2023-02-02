@@ -1,5 +1,5 @@
-from model.db import db
-from model.users.user import Player, User
+from models.db import db
+from models.users.user import Player, User
 
 teams_users = db.Table('teams_users',
                        db.Column('team_id', db.Integer, db.ForeignKey('teams.id'), primary_key=True),

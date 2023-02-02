@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from model import Answer
+from models import Answer
 
 app = Blueprint("answers", __name__)
 
