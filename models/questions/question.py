@@ -7,6 +7,8 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.String())
     theme = db.Column(db.String())
+    point = db.Column(db.Integer, nullable=True)
+    difficulty = db.Column(db.String(), nullable=True)
     quizz_id = db.Column(db.Integer, db.ForeignKey('quizz.id'),
                          nullable=True)
     answers = db.relationship('Answer', backref='question', lazy=False)

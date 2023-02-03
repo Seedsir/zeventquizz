@@ -20,6 +20,16 @@ def delete_team(team_id: int):
     return Team.delete_team_by_id(team_id)
 
 
-@app.route("/teams/<team_id>/<user_id>", methods=["GET"])
+@app.route("/teams/<team_id>/<user_id>", methods=["PUT"])
 def add_player(team_id: int, user_id: int):
     return Team.add_player_to_team(team_id, user_id)
+
+
+@app.route("/teams/<team_id>/score", methods=["GET"])
+def get_team_score(team_id: int):
+    return Team.get_score(team_id)
+
+
+@app.route("/teams/<team_id>/<point>", methods=["PUT"])
+def update_team_score(team_id: int, point: int):
+    return Team.get_update_scorescore(team_id, point)
