@@ -1,4 +1,5 @@
 import json
+from pprint import pprint
 
 from models.db import db
 
@@ -32,7 +33,7 @@ class Answer(db.Model):
     def get_good_answer(identifiant: int) -> 'Answer':
         answers = Answer.query.filter_by(question_id=identifiant).all()
         db.session.commit()
-        answer = [answer for answer in answers if answer['is_true'] is True]
+        answer = [answer for answer in answers if answer.is_true is True]
         return answer[0]
 
     @staticmethod

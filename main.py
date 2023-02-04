@@ -13,8 +13,6 @@ from models.teams.routes import app as teams_app
 from models.users.routes import app as users_app
 from models.Twitch.routes import app as twitch
 
-from models import User, Quizz, BattleQuizz, Team, Answer
-
 
 def create_app():
     app = FlaskAPI(__name__)

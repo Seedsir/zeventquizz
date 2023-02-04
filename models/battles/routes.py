@@ -17,9 +17,10 @@ def get_all():
     return jsonify([battle.render() for battle in BattleQuizz.get_all_battles()])
 
 
-@app.route("/battles", methods=["GET"])
-def get_suscribe_url():
-    return jsonify([battle.render() for battle in BattleQuizz.get_all_battles()])
+@app.route("/battles/<battle_id>/subscribe_url", methods=["GET"])
+def get_subscribe_url(battle_id: int):
+    battle = BattleQuizz.get_battle_by_id(battle_id)
+    return battle.subscribe_url
 
 
 @app.route("/battles/<battle_id>", methods=["GET"])
@@ -34,7 +35,8 @@ def delete_battle(battle_id):
 
 @app.route("/battles/<battle_id>/teams", methods=["GET"])
 def get_teams_battle(battle_id: int):
-    return jsonify([team.render() for team in Team.get_teams(battle_id)])
+    battle = BattleQuizz.get_battle_by_id(battle_id)
+    return jsonify(battle.get_teams())
 
 
 @app.route("/battles/<battle_id>/<team_name>/<username>", methods=["POST"])

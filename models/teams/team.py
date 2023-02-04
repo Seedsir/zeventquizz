@@ -17,6 +17,7 @@ class Team(db.Model):
                           nullable=True)
     users = db.relationship('User', secondary=teams_users, lazy='subquery',
                             backref=db.backref('users', lazy=True))
+    # TODO rename users by streamer
     score = db.relationship('Score', backref='teams', lazy=True)
 
     def __init__(self, streamer: str):

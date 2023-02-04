@@ -22,6 +22,11 @@ def get_user(username):
     return jsonify(User.get_user_by_username(username).render())
 
 
+@app.route("/users/user/<id_twitch>", methods=["GET"])
+def get_user_by_id_twitch(id_twitch):
+    return jsonify(User.get_user_by_id_twitch(str(id_twitch)).render())
+
+
 @app.route("/users/<username>", methods=["DELETE"])
 def delete_user(username):
     return User.delete_user_username(username)

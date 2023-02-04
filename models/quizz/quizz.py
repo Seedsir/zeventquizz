@@ -9,18 +9,18 @@ class Quizz(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     questions_number = db.Column(db.Integer())
-    theme = db.Column(db.String())
+
     battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'), nullable=True)
     questions = db.relationship('Question', backref='quizz', lazy=False)
 
     def __init__(self, theme: str, question_number: int):
-        self.theme = theme.lower()
+        self.theme = self.battlequizz.theme
         self.question_number = question_number  # TODO reflechir au fait que ca ne sert a rien de le garder dans l'objet
         self.questions = Question.select_questions_by_theme(question_number, theme)
         if question_number > len(self.questions):
             raise Exception(  # TODO create a correcte exception
                 f"Limite maximale de questions dépassée, "
-                f"merci de ne pas dépasser {len(self.questions)} sur le thème : {self.theme}")
+                f"merci de ne pas dépasser {len(self.questions)} sur le thème : {self.battlequizz.theme}")
         self.progress = None
 
     def quizz_progress(self, index: int):
@@ -36,7 +36,7 @@ class Quizz(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def __str__(self):
-        return f"Battle numéro {self.battle_id} - thème {self.theme}"
+        return f"Quizz de la battle numéro {self.battle_id} - thème {self.battlequizz.theme}"
 
     @staticmethod
     def create_quizz(theme: str, nb_questions: int) -> 'Quizz':

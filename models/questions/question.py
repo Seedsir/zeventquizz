@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from models.db import db
 
 
@@ -39,4 +41,5 @@ class Question(db.Model):
     @staticmethod
     def get_question_by_id(identifiant: int)-> 'Question':
         question = Question.query.filter_by(id=identifiant).first()
+        db.session.commit()
         return question

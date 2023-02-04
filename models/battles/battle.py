@@ -8,6 +8,7 @@ class BattleQuizz(db.Model):
     __tablename__ = "battles"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
+    theme = db.Column(db.String())
     stremers_number = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         nullable=False)
@@ -23,7 +24,8 @@ class BattleQuizz(db.Model):
         self.create_teams()
 
     @property
-    def suscribe_url(self) -> str:
+    def subscribe_url(self) -> str:
+        # TODO encode the url with urllib
         token = uuid.uuid4()
         url = f"http://127.0.0.1:5000/battle/{self.theme}/{token}"
         return url
