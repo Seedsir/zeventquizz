@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 from models import Answer
 
@@ -12,14 +12,22 @@ def get_all_possible_answers(question_id: int):
 
 @app.route("/answers/<question_id>/answer", methods=["GET"])
 def get_good_answer(question_id: int):
-    return jsonify(Answer.get_good_answer(question_id).render())
+    list_answer = []
+    true_answer = [answer for answer in Answer.get_good_answer(question_id)][0].render()
+    list_answer.append(true_answer)
+    return jsonify(list_answer)
 
 
-@app.route("/answers/<question_id>", methods=["POST"])
-def create_answer(question_id: int, value: str, is_true: bool):
-    return Answer.create_answer(question_id, value, is_true)
+@app.route("/answers", methods=["POST"])
+def create_answer():
+    question_id = int(request.data['question_id'])
+    value = str(request.data['value'])
+    is_true = eval(request.data['is_true'])
+    Answer.create_answer(question_id, value, is_true)
+    return jsonify([{"status": 200, "message": "Answer created"}])
 
 
 @app.route("/answers/<answer_id>", methods=["DELETE"])
 def delete_answer(answer_id: int):
-    return Answer.delete_answer_by_id(answer_id)
+    Answer.delete_answer_by_id(answer_id)
+    return jsonify([{"status": 200, "message": "Answer deleted"}])

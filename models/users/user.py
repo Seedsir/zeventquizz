@@ -12,6 +12,7 @@ class User(db.Model):
     id_twitch = db.Column(db.String(), nullable=True)
     refresh_token = db.Column(db.String())
     battle = db.relationship('BattleQuizz', backref='user', lazy=True)
+    team_id = db.Column(db.Integer, nullable=True)
     # TODO ajouter le team_id
 
     def __init__(self, username: str, id_twitch: str):
@@ -40,12 +41,12 @@ class User(db.Model):
         return user
 
     @staticmethod
-    def get_user_by_id_twitch(id_twitch: str) -> 'User':
-        user = User.query.filter_by(id_twitch=id_twitch).all()
-        return user[0]
+    def get_user_by_id_twitch(id_twitch: str) -> list['User']:
+        users = User.query.filter_by(id_twitch=id_twitch).all()
+        return users
 
     @staticmethod
-    def is_user_already_exist(id_twitch: str)-> bool:
+    def is_user_already_exist(id_twitch: str) -> bool:
         user = User.query.filter_by(id_twitch=id_twitch).first()
         if user is not None:
             return True
@@ -66,8 +67,8 @@ class User(db.Model):
         db.session.commit()
 
     @staticmethod
-    def delete_user_username(username: str) -> None:
-        user = User.query.filter_by(username=username).first()
+    def delete_user(user_id: int) -> None:
+        user = User.query.filter_by(id=user_id).first()
         db.session.delete(user)
         db.session.commit()
 

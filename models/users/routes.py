@@ -19,17 +19,21 @@ app = Blueprint("users", __name__)
 
 @app.route("/users/<username>", methods=["GET"])
 def get_user(username):
-    return jsonify(User.get_user_by_username(username).render())
+    return jsonify([User.get_user_by_username(username).render()])
 
 
 @app.route("/users/user/<id_twitch>", methods=["GET"])
 def get_user_by_id_twitch(id_twitch):
-    return jsonify(User.get_user_by_id_twitch(str(id_twitch)).render())
+    list_users = []
+    user = [user for user in User.get_user_by_id_twitch(str(id_twitch))][0].render()
+    list_users.append(user)
+    return jsonify(list_users)
 
 
-@app.route("/users/<username>", methods=["DELETE"])
-def delete_user(username):
-    return User.delete_user_username(username)
+@app.route("/users/<user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    User.delete_user(user_id)
+    return jsonify([{"status": 200, "message": "User deleted"}])
 
 
 @app.route("/users/my_profile", methods=["GET"])
@@ -43,6 +47,9 @@ def get_profile():
     }
     req = requests.get('https://api.twitch.tv/helix/users', headers=data)
     if req.status_code != 200:
-        return abort(401)
+        return jsonify([{
+            "status_code": req.status_code,
+            "message": req.text
+        }])
     user_id = req.json()["data"][0].get("id")
     return jsonify(User.get_user_by_id_twitch(user_id).render())

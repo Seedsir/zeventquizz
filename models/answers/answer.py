@@ -30,11 +30,11 @@ class Answer(db.Model):
         return answers
 
     @staticmethod
-    def get_good_answer(identifiant: int) -> 'Answer':
+    def get_good_answer(identifiant: int) -> list['Answer']:
         answers = Answer.query.filter_by(question_id=identifiant).all()
         db.session.commit()
         answer = [answer for answer in answers if answer.is_true is True]
-        return answer[0]
+        return answer
 
     @staticmethod
     def create_answer(question_id: int, value: str, is_true: bool) -> None:
@@ -44,6 +44,6 @@ class Answer(db.Model):
 
     @staticmethod
     def delete_answer_by_id(identifiant: int) -> None:
-        question = Answer.query.filter_by(id=identifiant).first()
-        db.session.delete(question)
+        answer = Answer.query.filter_by(id=identifiant).first()
+        db.session.delete(answer)
         db.session.commit()
