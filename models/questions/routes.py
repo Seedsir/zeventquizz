@@ -14,15 +14,19 @@ def get_questions_by_theme(theme: str):
 
 
 @app.route("/questions", methods=["POST"])
-def create(value: str, theme: str):
-    return Question.create_question(value, theme)
+def create_question():
+    value = str(request.data['value'])
+    theme = str(request.data['theme'])
+    Question.create_question(value, theme)
+    return jsonify([{"status": 200, "message": "Question created"}])
 
 
-@app.route("/questions/question/<identifiant>", methods=["GET"])
-def get_question_by_id(identifiant: int):
-    return jsonify(Question.get_question_by_id(identifiant).render())
+@app.route("/questions/question/<question_id>", methods=["GET"])
+def get_question_by_id(question_id: int):
+    return jsonify([Question.get_question_by_id(question_id).render()])
 
 
 @app.route("/questions/delete/<question_id>", methods=["DELETE"])
 def delete_question(question_id: int):
-    return Question.delete_question_by_id(question_id)
+    Question.delete_question_by_id(question_id)
+    return jsonify([{"status": 200, "message": "Question deleted"}])

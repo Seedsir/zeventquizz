@@ -27,7 +27,7 @@ def create_answer():
     return jsonify([{"status": 200, "message": "Answer created"}])
 
 
-@app.route("/answers/<answer_id>", methods=["DELETE"])
+@app.route("/answers/delete/<answer_id>", methods=["DELETE"])
 def delete_answer(answer_id: int):
     Answer.delete_answer_by_id(answer_id)
     return jsonify([{"status": 200, "message": "Answer deleted"}])

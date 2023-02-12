@@ -30,6 +30,7 @@ def question():
     question.create_question("Est ce que mes tests passent ?", "Tester mon code")
     last_insert = Question.query.order_by(Question.id.desc()).first()
     question.id = int(last_insert.id)
+    question.theme = last_insert.theme
     yield question
 
 @pytest.fixture()
