@@ -8,8 +8,13 @@ app = Blueprint("battles", __name__)
 
 
 @app.route("/battles", methods=["POST"])
-def create_battle(name: str, streamers: list, theme: str, question_number: int):
-    return BattleQuizz.create_battle(name, streamers, theme, question_number)
+def create_battle():
+    name = str(request.data['name'])
+    streamers = list(request.data['streamers'])
+    theme = str(request.data['theme'])
+    question_number = int(request.data['question_number'])
+    BattleQuizz.create_battle(name, streamers, theme, question_number)
+    return jsonify([{"status": 200, "message": "Battle created"}])
 
 
 @app.route("/battles", methods=["GET"])

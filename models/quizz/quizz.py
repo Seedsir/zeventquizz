@@ -9,18 +9,19 @@ class Quizz(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     questions_number = db.Column(db.Integer())
+    theme = db.Column(db.String())
 
     battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'), nullable=True)
     questions = db.relationship('Question', backref='quizz', lazy=False)
 
     def __init__(self, theme: str, question_number: int):
-        self.theme = self.battlequizz.theme
+        self.theme = self.theme
         self.question_number = question_number  # TODO reflechir au fait que ca ne sert a rien de le garder dans l'objet
-        self.questions = Question.select_questions_by_theme(question_number, theme)
-        if question_number > len(self.questions):
-            raise Exception(  # TODO create a correcte exception
-                f"Limite maximale de questions dépassée, "
-                f"merci de ne pas dépasser {len(self.questions)} sur le thème : {self.battlequizz.theme}")
+        self.questions = Question.select_questions_by_theme(theme)
+        # if question_number > len(self.questions):
+        #     raise Exception(  # TODO create a correcte exception
+        #         f"Limite maximale de questions dépassée, "
+        #         f"merci de ne pas dépasser {len(self.questions)} sur le thème : {self.theme}")
         self.progress = None
 
     def quizz_progress(self, index: int):

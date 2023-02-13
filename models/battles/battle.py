@@ -10,17 +10,19 @@ class BattleQuizz(db.Model):
     name = db.Column(db.String())
     theme = db.Column(db.String())
     stremers_number = db.Column(db.Integer())
+    questions_number = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-                        nullable=False)
+                        nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False, default=False)
     teams = db.relationship('Team', backref='battlequizz', lazy=False)
     quizz = db.relationship('Quizz', backref='battlequizz', lazy=False)
 
-    def __init__(self, name: str, streamers_list: list, theme: str, question_number: int):
+    def __init__(self, name: str, streamers_list: list, theme: str, questions_number: int):
         self.name = name
         self.streamer_list = streamers_list
         self.theme = theme
-        self.quizz = Quizz(theme, question_number)
+        self.questions_number = questions_number
+        self.quizz = [Quizz(theme, questions_number)]
         self.create_teams()
 
     @property
@@ -63,8 +65,9 @@ class BattleQuizz(db.Model):
         return BattleQuizz.query.filter_by(is_active=True).all()
 
     @staticmethod
-    def create_battle(name: str, streamers: list, theme: str, question_number: int) -> None:
-        battle = BattleQuizz(name, streamers, theme, question_number)
+    def create_battle(name: str, streamers: list, theme: str, questions_number: int) -> None:
+        battle = BattleQuizz(name, streamers, theme, questions_number)
+        battle.stremers_number = len(streamers)
         db.session.add(battle)
         db.session.commit()
 
