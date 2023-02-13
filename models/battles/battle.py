@@ -1,3 +1,5 @@
+from typing import List
+
 from models.db import db
 from models.quizz.quizz import Quizz
 import uuid
@@ -23,7 +25,7 @@ class BattleQuizz(db.Model):
         self.theme = theme
         self.questions_number = questions_number
         self.quizz = [Quizz(theme, questions_number)]
-        self.create_teams()
+        self.teams = self.create_teams()
 
     @property
     def subscribe_url(self) -> str:
@@ -32,9 +34,10 @@ class BattleQuizz(db.Model):
         url = f"http://127.0.0.1:5000/battle/{self.theme}/{token}"
         return url
 
-    def create_teams(self) -> None:
+    def create_teams(self) -> List['Team']:
         for streamer in self.streamer_list:
             self.teams.append(Team(streamer))
+            return self.teams
 
     def start_battle(self) -> None:
         self.is_active = True
@@ -46,13 +49,8 @@ class BattleQuizz(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def get_teams(self) -> dict:
-        if not len(self.teams) > 0:
-            return "Aucune équipe n'a été crée pour le moment"
-        dict_teams = {}
-        for equipe in self.teams:
-            dict_teams[f'Equipe {self.teams.index(equipe)}'] = equipe.streamer
-        return dict_teams
+    def get_teams(self) -> List[Team]:
+        return self.teams
 
     def __str__(self):
         return self.name
@@ -61,7 +59,7 @@ class BattleQuizz(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @staticmethod
-    def get_all_battles() -> list['BattleQuizz']:
+    def get_all_active_battles() -> list['BattleQuizz']:
         return BattleQuizz.query.filter_by(is_active=True).all()
 
     @staticmethod

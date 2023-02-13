@@ -1,6 +1,6 @@
 import pytest
 from main import create_app
-from models import User, Question, Answer
+from models import User, Question, Answer, BattleQuizz
 from models.db import db
 
 
@@ -23,6 +23,21 @@ def user():
     user.id = int(last_user.id)
     return user
 
+
+@pytest.fixture()
+def battle():
+    battle = BattleQuizz("La battle de la mort",
+                         ["Zeratroll", "Sixenus", "DFGood"],
+                         "Gérard en ski",
+                         20
+                         )
+    battle.create_battle("La battle de la mort",
+                         ["Zeratroll", "Sixenus", "DFGood"],
+                         "Gérard en ski",
+                         20)
+    last_battle = BattleQuizz.query.order_by(BattleQuizz.id.desc()).first()
+    battle.id = int(last_battle.id)
+    return battle
 
 @pytest.fixture()
 def question():

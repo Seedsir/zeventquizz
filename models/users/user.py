@@ -73,10 +73,10 @@ class User(db.Model):
         db.session.commit()
 
     @staticmethod
-    def select_a_team(username, battle_id, team_name) -> None:
+    def select_a_team(username, battle_id, team_id) -> None:
         user = User.query.filter_by(username=username).first()
         user.battle = battle_id
-        user.team = team_name
+        user.team_id = team_id
         db.session.add(user)
         db.session.commit()
 

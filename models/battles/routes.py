@@ -18,19 +18,23 @@ def create_battle():
 
 
 @app.route("/battles", methods=["GET"])
-def get_all():
-    return jsonify([battle.render() for battle in BattleQuizz.get_all_battles()])
+def get_all_active_battles():
+    return jsonify([battle.render() for battle in BattleQuizz.get_all_active_battles()])
 
 
 @app.route("/battles/<battle_id>/subscribe_url", methods=["GET"])
 def get_subscribe_url(battle_id: int):
     battle = BattleQuizz.get_battle_by_id(battle_id)
-    return battle.subscribe_url
+    return jsonify([
+        {"battle_id": battle.id},
+        {"battle_name": battle.name},
+        {"subscribe_url": battle.subscribe_url},
+    ])
 
 
 @app.route("/battles/<battle_id>", methods=["GET"])
 def get_battle(battle_id):
-    return jsonify(BattleQuizz.get_battle_by_id(battle_id).render())
+    return jsonify([BattleQuizz.get_battle_by_id(battle_id).render()])
 
 
 @app.route("/battles/<battle_id>", methods=["DELETE"])
@@ -41,9 +45,13 @@ def delete_battle(battle_id):
 @app.route("/battles/<battle_id>/teams", methods=["GET"])
 def get_teams_battle(battle_id: int):
     battle = BattleQuizz.get_battle_by_id(battle_id)
-    return jsonify(battle.get_teams())
+    return jsonify([team.render() for team in battle.get_teams()])
 
 
-@app.route("/battles/<battle_id>/<team_name>/<username>", methods=["POST"])
-def select_team(battle_id: int, team_name: str, username: str):
-    return User.select_a_team(username, battle_id, team_name)
+@app.route("/battles/<battle_id>/<team_id>/<username>", methods=["PUT"])
+def select_team(battle_id: int, team_id: int, username: str):
+    User.select_a_team(username, battle_id, team_id)
+    return jsonify([
+        {"status_code": 200},
+        {"message": f"{username} à bien rejoint l'équipe {team_id}"}
+    ])
