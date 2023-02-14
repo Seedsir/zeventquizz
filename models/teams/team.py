@@ -18,10 +18,11 @@ class Team(db.Model):
     battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'),
                           nullable=True)
     team_user = db.relationship('User', secondary=teams_users, lazy='subquery',
-                            backref=db.backref('users', lazy=True))
+                                backref=db.backref('users', lazy=True))
     score = db.relationship('Score', backref='teams', lazy=True)
 
     def __init__(self, streamer: str):
+        self.name = f"{streamer}'s Team"
         self.streamer = streamer
         self.viewers = []
 
@@ -67,24 +68,18 @@ class Team(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_score(team_id: int) -> dict:
+    def get_score(team_id: int, battle_id: int) -> dict:
         score = Score.query.filter_by(team_id=team_id).first()
         if score is None:
-            return {
-                'team_id': team_id,
-                'score': 0,
-            }
-        return {
-            'team_id': team_id,
-            'score': score.value,
-        }
+            new_score = Score(0, team_id, battle_id=battle_id)
+            db.session.add(new_score)
+            db.session.commit()
+            return new_score
+        return score
 
     @staticmethod
-    def update_score(team_id: int, point: int) -> None:
-        team = Team.query.filter_by(id=team_id).first()
-        if team.score is None:
-            team.score = 0
-        score = Score(team.score, team_id)
-        team.score = score.calculate_score(point)
-        db.session.add(team)
+    def update_score(battle_id: int, team_id: int, point: int) -> None:
+        score = Score.query.filter_by(battle_id=battle_id,team_id=team_id).first()
+        score.calculate_score(int(point))
+        db.session.add(score)
         db.session.commit()

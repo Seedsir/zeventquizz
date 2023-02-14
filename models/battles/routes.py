@@ -25,11 +25,11 @@ def get_all_active_battles():
 @app.route("/battles/<battle_id>/subscribe_url", methods=["GET"])
 def get_subscribe_url(battle_id: int):
     battle = BattleQuizz.get_battle_by_id(battle_id)
-    return jsonify([
-        {"battle_id": battle.id},
-        {"battle_name": battle.name},
-        {"subscribe_url": battle.subscribe_url},
-    ])
+    return jsonify([{
+        "battle_id": battle.id,
+        "battle_name": battle.name,
+        "subscribe_url": battle.subscribe_url,
+    }])
 
 
 @app.route("/battles/<battle_id>", methods=["GET"])
@@ -51,7 +51,7 @@ def get_teams_battle(battle_id: int):
 @app.route("/battles/<battle_id>/<team_id>/<username>", methods=["PUT"])
 def select_team(battle_id: int, team_id: int, username: str):
     User.select_a_team(username, battle_id, team_id)
-    return jsonify([
-        {"status_code": 200},
-        {"message": f"{username} à bien rejoint l'équipe {team_id}"}
-    ])
+    return jsonify([{
+        "status_code": 200,
+        "message": f"{username} à bien rejoint l'équipe {team_id}"
+    }])

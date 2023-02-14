@@ -1,6 +1,6 @@
 import pytest
 from main import create_app
-from models import User, Question, Answer, BattleQuizz
+from models import User, Question, Answer, BattleQuizz, Team
 from models.db import db
 
 
@@ -39,6 +39,16 @@ def battle():
     battle.id = int(last_battle.id)
     return battle
 
+
+@pytest.fixture()
+def team():
+    team = Team("Tidoublou")
+    team.create_team("Tidoublou")
+    last_insert = Team.query.order_by(Team.id.desc()).first()
+    team.id = int(last_insert.id)
+    return team
+
+
 @pytest.fixture()
 def question():
     question = Question()
@@ -47,6 +57,7 @@ def question():
     question.id = int(last_insert.id)
     question.theme = last_insert.theme
     yield question
+
 
 @pytest.fixture()
 def answer():
@@ -63,4 +74,3 @@ def question_with_true_answer():
     answer = Answer(question.id, "Cette réponse est vraie", True)
     answer.create_answer(question.id, "Cette réponse est vraie", True)
     yield question
-

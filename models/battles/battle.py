@@ -1,5 +1,5 @@
 from typing import List
-
+from urllib.parse import urlencode
 from models.db import db
 from models.quizz.quizz import Quizz
 import uuid
@@ -11,7 +11,7 @@ class BattleQuizz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     theme = db.Column(db.String())
-    stremers_number = db.Column(db.Integer())
+    streamers_number = db.Column(db.Integer())
     questions_number = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         nullable=True)
@@ -29,15 +29,14 @@ class BattleQuizz(db.Model):
 
     @property
     def subscribe_url(self) -> str:
-        # TODO encode the url with urllib
         token = uuid.uuid4()
         url = f"http://127.0.0.1:5000/battle/{self.theme}/{token}"
-        return url
+        return urlencode(url)
 
     def create_teams(self) -> List['Team']:
         for streamer in self.streamer_list:
             self.teams.append(Team(streamer))
-            return self.teams
+        return self.teams
 
     def start_battle(self) -> None:
         self.is_active = True
