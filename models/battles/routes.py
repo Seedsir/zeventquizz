@@ -50,7 +50,7 @@ def get_teams_battle(battle_id: int):
 
 @app.route("/battles/<battle_id>/<team_id>/<username>", methods=["PUT"])
 def select_team(battle_id: int, team_id: int, username: str):
-    User.select_a_team(username, battle_id, team_id)
+    User.select_a_team(username, team_id)
     return jsonify([{
         "status_code": 200,
         "message": f"{username} à bien rejoint l'équipe {team_id}"

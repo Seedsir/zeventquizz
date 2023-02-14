@@ -37,6 +37,11 @@ def battle():
                          20)
     last_battle = BattleQuizz.query.order_by(BattleQuizz.id.desc()).first()
     battle.id = int(last_battle.id)
+    teams = Team.query.filter_by(battle_id=battle.id).all()
+    for team in battle.teams:
+        for t in teams:
+            if team.name == t.name:
+                team.id = t.id
     return battle
 
 

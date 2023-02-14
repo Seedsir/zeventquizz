@@ -18,8 +18,8 @@ def test_get_team(client, team):
     assert type(response.json) == list
 
 
-def test_get_team_score(client, team): # TODO valeur en dure
-    url = url_for('teams.get_team_score', battle_id=8, team_id=team.id)
+def test_get_team_score(client, battle):
+    url = url_for('teams.get_team_score', battle_id=battle.id, team_id=battle.teams[0].id)
     response = client.get(url)
     assert response.status_code == 200
     assert type(response.json) == list
@@ -39,8 +39,8 @@ def test_delete_team(client, team):
     assert type(response.json) == list
 
 
-def test_add_player(client, app, user): # TODO c'est pas parce que ca marche que c'est bien.
-    url = url_for('teams.add_player')
-    response = client.post(url)
+def test_add_player(client, app, user, team):
+    url = url_for('teams.add_player', team_id=team.id, user_id=user.id)
+    response = client.put(url)
     assert response.status_code == 200
-    assert response.json == {"status": "OK", "Message": f"Utilisateur 1 bien ajouté"}
+    assert type(response.json) == list

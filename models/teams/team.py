@@ -59,12 +59,9 @@ class Team(db.Model):
 
     @staticmethod
     def add_player_to_team(team_id: int, user_id: int) -> None:
-        logger.debug(f"Je suis bien dans la fonction d'ajouter de user: équipe {team_id} et user {user_id}")
-        user = User.query.filter_by(id=1).first()
-        logger.debug(f"Valeur de user: {user.render()}")
+        user = User.query.filter_by(id=user_id).first()
         user.team_id = team_id
         db.session.add(user)
-        logger.debug(f"Valeur de user juste avant le commit: {user.render()}")
         db.session.commit()
 
     @staticmethod

@@ -1,14 +1,20 @@
+from typing import List, Dict
+
 from flask import Blueprint, jsonify, request
+from flask_api.response import APIResponse
 
 from models import Team
 
 app = Blueprint("teams", __name__)
 
 
-@app.route("/teams/team/add_player", methods=["POST"])  # TODO A revoire
-def add_player():
-    Team.add_player_to_team(3, 1)
-    return {"status": "OK", "Message": f"Utilisateur 1 bien ajouté"}
+@app.route("/teams/<team_id>/<user_id>", methods=["PUT"])
+def add_player(team_id: int, user_id: int):
+    Team.add_player_to_team(team_id, user_id)
+    return jsonify([{
+        "status": "OK",
+        "message": f"Utilisateur {user_id} bien ajouté à l'équipe {team_id}"
+    }])
 
 
 @app.route("/teams/create", methods=["POST"])

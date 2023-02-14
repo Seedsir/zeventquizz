@@ -1,3 +1,5 @@
+import random
+
 from flask import url_for
 
 
@@ -42,11 +44,13 @@ def test_get_teams_battle(client, battle):
     assert type(response.json) == list
 
 
-def test_select_team(client, battle, user, team):  # TODO ne peut pas fonctionner tant que la création d'équipe n'est pas refacto
+def test_select_team(client, battle, user):
+    index = random.randint(0, len(battle.teams))
+    team_id = battle.teams[index].id
     url = url_for('battles.select_team',
                   battle_id=battle.id,
-                  team_id=team.id,
+                  team_id=team_id,
                   username=user.username)
-    response = client.get(url)
+    response = client.put(url)
     assert response.status_code == 200
     assert type(response.json) == list
