@@ -1,6 +1,6 @@
 import pytest
 from main import create_app
-from models import User, Question, Answer, BattleQuizz, Team
+from models import User, Question, Answer, BattleQuizz, Team, Quizz
 from models.db import db
 
 
@@ -42,6 +42,8 @@ def battle():
         for t in teams:
             if team.name == t.name:
                 team.id = t.id
+    quizz = Quizz.query.filter_by(battle_id=battle.id).first()
+    battle.quizz[0].id = quizz.id
     return battle
 
 
