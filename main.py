@@ -3,17 +3,23 @@ import time
 from flask_api import FlaskAPI
 import sqlalchemy
 
-from model.admin import admin
-from model.answers.routes import app as answers_app
-from model.battles.routes import app as battles_app
-from model.db import db
-from model.questions.routes import app as questions_app
-from model.quizz.routes import app as quizz_app
-from model.teams.routes import app as teams_app
-from model.users.routes import app as users_app
-from model.Twitch.routes import app as twitch
+from models.admin import admin
+from models.answers.routes import app as answers_app
+from models.battles.routes import app as battles_app
+from models.db import db
+from models.questions.routes import app as questions_app
+from models.quizz.routes import app as quizz_app
+from models.teams.routes import app as teams_app
+from models.users.routes import app as users_app
+from models.Twitch.routes import app as twitch
+from loguru import logger
+import logging
 
-from model import User, Quizz, BattleQuizz, Team, Answer
+
+class InterceptHandler(logging.Handler):
+    def emit(self, record):
+        logger_opt = logger.opt(depth=6, exception=record.exc_info)
+        logger_opt.log(record.levelno, record.getMessage())
 
 
 def create_app():
@@ -26,11 +32,15 @@ def create_app():
     app.register_blueprint(teams_app)
     app.register_blueprint(users_app)
     app.register_blueprint(twitch)
+    # Local config
+    # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@localhost:5432/zevent_quizz"
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@db:5432/zevent_quizz"
+    app.config['TESTING'] = True
     db.init_app(app)
     create_database(app)
     admin.init_app(app)
-
+    app.logger.addHandler(InterceptHandler())
+    logger.warning("L'application a démarré correctement.")
     return app
 
 
@@ -45,3 +55,7 @@ def create_database(app):
                 print(f'Database not started yet, sleeping {time_to_sleep}')
                 time.sleep(time_to_sleep)
         db.create_all()
+
+
+if __name__ == '__main__':
+    create_app()

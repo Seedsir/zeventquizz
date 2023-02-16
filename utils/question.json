@@ -1,0 +1,316 @@
+{
+  "questions": [
+    {
+      "question": "Combien y t-il de champion disponible en janvier 2023",
+      "difficulté": "difficile",
+      "nombre_de_points": 3,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "150",
+          "juste": false
+        },
+        {
+          "réponse": "200",
+          "juste": false
+        },
+        {
+          "réponse": "162",
+          "juste": true
+        },
+        {
+          "réponse": "133",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "Qu''elle est la date de sortie du jeu ?",
+      "difficulté": "facile",
+      "nombre_de_points": 1,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "27 Octobre 2009",
+          "juste": true
+        },
+        {
+          "réponse": "9 Juillet 2013",
+          "juste": false
+        },
+        {
+          "réponse": "14 Juillet 2022",
+          "juste": false
+        },
+        {
+          "réponse": "15 Mars 2010",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "Quel joueur est connu pour avoir \"backdoor\" en tournant autour du Nexus ennemi sans se faire attraper ?",
+      "difficulté": "moyen",
+      "nombre_de_points": 2,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Faker",
+          "juste": false
+        },
+        {
+          "réponse": "Yellowstar",
+          "juste": false
+        },
+        {
+          "réponse": "14 juillet 2022",
+          "juste": false
+        },
+        {
+          "réponse": "ArKaDaTa",
+          "juste": true
+        }
+      ]
+    },
+    {
+      "question": "Quelle équipe est sortie championne du monde de LoL en 2011 ?",
+      "difficulté": "moyen",
+      "nombre_de_points": 2,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "SK Telecom T1 (SKT)",
+          "juste": false
+        },
+        {
+          "réponse": "Karmine Corps (KC)",
+          "juste": false
+        },
+        {
+          "réponse": "Fnatic (FNC)",
+          "juste": true
+        },
+        {
+          "réponse": "Team SoloMid (TSM)",
+          "juste": true
+        }
+      ]
+    },
+    {
+      "question": "D''ou viennent les champions suivants: Janna, Ekko, Jinx, Dr. Mundo, Blitzcrank?",
+      "difficulté": "facile",
+      "nombre_de_points": 1,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Noxus",
+          "juste": false
+        },
+        {
+          "réponse": "Zaun",
+          "juste": true
+        },
+        {
+          "réponse": "Demacia",
+          "juste": false
+        },
+        {
+          "réponse": "Ionia",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "Qui est le frère aîné de Lux ?",
+      "difficulté": "facile",
+      "nombre_de_points": 1,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Jarvan IV",
+          "juste": false
+        },
+        {
+          "réponse": "Galio",
+          "juste": false
+        },
+        {
+          "réponse": "Poppy",
+          "juste": false
+        },
+        {
+          "réponse": "Garen",
+          "juste": true
+        }
+      ]
+    },
+    {
+      "question": "Quel est le nom de famille de Garen ?",
+      "difficulté": "difficile",
+      "nombre_de_points": 3,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Crownguard",
+          "juste": true
+        },
+        {
+          "réponse": "Nerag",
+          "juste": false
+        },
+        {
+          "réponse": "Crowford",
+          "juste": false
+        },
+        {
+          "réponse": "Swordguardian",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "A qui appartient la compétence \"Rush du Néant\" ?",
+      "difficulté": "difficile",
+      "nombre_de_points": 3,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Lilia",
+          "juste": false
+        },
+        {
+          "réponse": "Rek''Sai",
+          "juste": true
+        },
+        {
+          "réponse": "Kaïsa",
+          "juste": false
+        },
+        {
+          "réponse": "Lissandra",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "Que fait la compétence passive \"Chasseur nocturne\" de Vayne ?",
+      "difficulté": "difficile",
+      "nombre_de_points": 3,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Elle augmente sa vitesse d''attaque",
+          "juste": false
+        },
+        {
+          "réponse": "Elle augmente ses dégâts",
+          "juste": false
+        },
+        {
+          "réponse": "Elle permet de voir les ennemis dans le brouillard de guerre",
+          "juste": false
+        },
+        {
+          "réponse": "Elle augmente sa vitesse de placement vers les ennemis proches.",
+          "juste": true
+        }
+      ]
+    },
+    {
+      "question": "A combien joue t-on a League of Legend ? (Faille de l''invocateur)",
+      "difficulté": "facile",
+      "nombre_de_points": 1,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "4",
+          "juste": false
+        },
+        {
+          "réponse": "6",
+          "juste": false
+        },
+        {
+          "réponse": "5",
+          "juste": true
+        },
+        {
+          "réponse": "3",
+          "juste": true
+        }
+      ]
+    },
+    {
+      "question": "Combien y a t-il de voies dans la Faille de l''Invocateur ? (Hors jungle)",
+      "difficulté": "facile",
+      "nombre_de_points": 1,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "3",
+          "juste": true
+        },
+        {
+          "réponse": "2",
+          "juste": false
+        },
+        {
+          "réponse": "4",
+          "juste": false
+        },
+        {
+          "réponse": "La Faille de quoi ?",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "Quel lien lie Jinx et VI ?",
+      "difficulté": "facile",
+      "nombre_de_points": 1,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Elles sont mariées",
+          "juste": false
+        },
+        {
+          "réponse": "Elles sont cousines",
+          "juste": false
+        },
+        {
+          "réponse": "Elles sont soeur",
+          "juste": true
+        },
+        {
+          "réponse": "VI est la mère de Jinx",
+          "juste": false
+        }
+      ]
+    },
+    {
+      "question": "De qui vient la réplique : \"Mon bras droit est bien plus fort que mon bras gauche!\" ?",
+      "difficulté": "moyen",
+      "nombre_de_points": 2,
+      "thème": "League of Legend",
+      "réponses": [
+        {
+          "réponse": "Renekton",
+          "juste": false
+        },
+        {
+          "réponse": "Garen",
+          "juste": false
+        },
+        {
+          "réponse": "Tryndamere",
+          "juste": true
+        },
+        {
+          "réponse": "Darius",
+          "juste": false
+        }
+      ]
+    }
+  ]
+}
