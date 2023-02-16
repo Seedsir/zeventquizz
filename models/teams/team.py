@@ -25,6 +25,7 @@ class Team(db.Model):
         self.name = f"{streamer}'s Team"
         self.streamer = streamer
         self.viewers = []
+        self.score = [Score(0, self.id, self.battle_id)]
 
     def add_viewer(self, user: Player):
         self.viewers.append(user)
@@ -66,17 +67,17 @@ class Team(db.Model):
 
     @staticmethod
     def get_score(team_id: int, battle_id: int) -> dict:
-        score = Score.query.filter_by(team_id=team_id).first()
-        if score is None:
-            new_score = Score(0, team_id, battle_id=battle_id)
-            db.session.add(new_score)
-            db.session.commit()
-            return new_score
+        score = Score.query.filter_by(team_id=team_id, battle_id=battle_id).first()
+        # if score is None:
+        #     new_score = Score(0, team_id, battle_id=battle_id)
+        #     db.session.add(new_score)
+        #     db.session.commit()
+        #     return new_score
         return score
 
     @staticmethod
     def update_score(battle_id: int, team_id: int, point: int) -> None:
-        score = Score.query.filter_by(battle_id=battle_id,team_id=team_id).first()
+        score = Score.query.filter_by(battle_id=battle_id ,team_id=team_id).first()
         score.calculate_score(int(point))
         db.session.add(score)
         db.session.commit()

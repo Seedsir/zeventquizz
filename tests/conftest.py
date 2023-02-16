@@ -1,7 +1,17 @@
 import pytest
+import sys
+import os
+
+# getting the name of the directory where the this file is present.
+current = os.path.dirname(os.path.realpath(__file__))
+
+# Getting the parent directory name where the current directory is present.
+parent = os.path.dirname(current)
+
+# adding the parent directory to the sys.path.
+sys.path.append(parent)
 from main import create_app
 from models import User, Question, Answer, BattleQuizz, Team, Quizz
-from models.db import db
 
 
 @pytest.fixture()
@@ -42,6 +52,9 @@ def battle():
         for t in teams:
             if team.name == t.name:
                 team.id = t.id
+                team.score[0].id = t.score[0].id
+                team.score[0].team_id = t.id
+                team.score[0].battle_id = battle.id
     quizz = Quizz.query.filter_by(battle_id=battle.id).first()
     battle.quizz[0].id = quizz.id
     return battle

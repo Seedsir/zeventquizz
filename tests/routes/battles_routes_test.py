@@ -45,7 +45,7 @@ def test_get_teams_battle(client, battle):
 
 
 def test_select_team(client, battle, user):
-    index = random.randint(0, len(battle.teams))
+    index = random.randint(0, len(battle.teams)-1)
     team_id = battle.teams[index].id
     url = url_for('battles.select_team',
                   battle_id=battle.id,

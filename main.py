@@ -32,7 +32,9 @@ def create_app():
     app.register_blueprint(teams_app)
     app.register_blueprint(users_app)
     app.register_blueprint(twitch)
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@localhost:5432/zevent_quizz"
+    # Local config
+    # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@localhost:5432/zevent_quizz"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@db:5432/zevent_quizz"
     app.config['TESTING'] = True
     db.init_app(app)
     create_database(app)

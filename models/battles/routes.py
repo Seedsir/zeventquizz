@@ -24,21 +24,16 @@ def get_all_active_battles() -> 'Response':
 
 @app.route("/battles/<battle_id>/subscribe_url", methods=["GET"])
 def get_subscribe_url(battle_id: int) -> 'Response':
-    battle = BattleQuizz.get_battle_by_id(battle_id)
-    return jsonify([{
-        "battle_id": battle.id,
-        "battle_name": battle.name,
-        "subscribe_url": battle.subscribe_url,
-    }])
+    return jsonify([BattleQuizz.get_battle_by_id(battle_id).render()])
 
 
 @app.route("/battles/<battle_id>", methods=["GET"])
-def get_battle(battle_id) -> 'Response':
+def get_battle(battle_id: int) -> 'Response':
     return jsonify([BattleQuizz.get_battle_by_id(battle_id).render()])
 
 
 @app.route("/battles/<battle_id>", methods=["DELETE"])
-def delete_battle(battle_id) -> 'Response':
+def delete_battle(battle_id: int) -> 'Response':
     BattleQuizz.delete_battle_by(battle_id)
     return jsonify([{
         "status": 200,
