@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client
+      - run: sudo apt-get install psycopg2
       - run: whoami
       - run: |
           psql \
