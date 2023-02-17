@@ -1,18 +1,25 @@
- jobs:
+version: 2.1
+
+jobs:
   build:
-    executor: python/default
+
+    # Primary container image where all commands run
     docker:
-      - image: circleci/python:3.10.1-node-browsers-legacy
+      - image: cimg/python:3.10
         environment:
-          ENV: CIRCLE
-          DATABASE_URL: postgresql://circleci@localhost/circle_test
-      - image: circleci/postgres:9-bullseye-ram
+          TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
+        auth:
+          username: seedsir
+          password: calvi2013  # context / project UI env-var reference
+
+    # Service container image
+      - image: cimg/postgres:14.0
         environment:
-          PGHOST: localhost
-          PGUSER: circleci
-          POSTGRES_USER: circleci
-          POSTGRES_DB: circle_test
-          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_USER: postgres
+        auth:
+          username: seedsir
+          password: calvi2013  # context / project UI env-var reference
+
     steps:
       - checkout
       - run:
