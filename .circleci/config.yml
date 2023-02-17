@@ -2,11 +2,11 @@
   build:
     executor: python/default
     docker:
-      - image: circleci/python:3.10.7
+      - image: circleci/python:3.10.1-node-browsers-legacy
         environment:
           ENV: CIRCLE
           DATABASE_URL: postgresql://circleci@localhost/circle_test
-      - image: circleci/postgres:latest
+      - image: circleci/postgres:9-bullseye-ram
         environment:
           PGHOST: localhost
           PGUSER: circleci
