@@ -1,35 +1,27 @@
-version: 2.1
-
-jobs:
+ jobs:
   build:
-
-    # Primary container image where all commands run
+    executor: python/default
     docker:
-      - image: cimg/python:3.10
+      - image: circleci/python:3.10.7
         environment:
-          TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
-        auth:
-          username: seedsir
-          password: calvi2013  # context / project UI env-var reference
-
-    # Service container image
-      - image: cimg/postgres:14.0
+          ENV: CIRCLE
+          DATABASE_URL: postgresql://circleci@localhost/circle_test
+      - image: circleci/postgres:latest
         environment:
-          POSTGRES_USER: postgres
-        auth:
-          username: seedsir
-          password: calvi2013  # context / project UI env-var reference
-
+          PGHOST: localhost
+          PGUSER: circleci
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+          POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
-      - run: sudo apt-get update
-      - run: sudo pip install psycopg2
-      - run: whoami
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "CREATE TABLE test (name char(25));"
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "INSERT INTO test VALUES ('John'), ('Joanna'), ('Jennifer');"
+      - python/load-cache
+      - run:
+          name: Wait for db to run
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip3 install -r requirements.txt
+      - python/save-cache
