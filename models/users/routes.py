@@ -22,7 +22,7 @@ def get_user(username: str) -> 'Response':
 @app.route("/users/user/<id_twitch>", methods=["GET"])
 def get_user_by_id_twitch(id_twitch: int) -> 'Response':
     list_users = []
-    user = [user for user in User.get_user_by_id_twitch(str(id_twitch))][0].render()
+    user = User.get_user_by_id_twitch(str(id_twitch)).render()
     list_users.append(user)
     return jsonify(list_users)
 

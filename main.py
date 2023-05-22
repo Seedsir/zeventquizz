@@ -35,9 +35,9 @@ def create_app():
     # Local config
     # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@localhost:5432/zevent_quizz"
     # Docke config
-    # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@db:5432/zevent_quizz"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:zevent@db:5432/zevent_quizz"
     # circle ci config
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres@localhost/circle_test"
+    # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres@localhost/circle_test"
     app.config['TESTING'] = True
     db.init_app(app)
     create_database(app)

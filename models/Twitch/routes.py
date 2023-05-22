@@ -4,7 +4,7 @@ from models.Twitch.oauth_twitch import TwitchAuth
 app = Blueprint("twitch", __name__)
 
 
-@app.route("/acceuil", methods=['GET'])
+@app.route("/192.168.1.16:3000/authorisationCode", methods=['GET'])
 def acceuil():
     return f'Hello world'
 

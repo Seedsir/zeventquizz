@@ -41,8 +41,8 @@ class User(db.Model):
         return user
 
     @staticmethod
-    def get_user_by_id_twitch(id_twitch: str) -> list['User']:
-        users = User.query.filter_by(id_twitch=id_twitch).all()
+    def get_user_by_id_twitch(id_twitch: str) -> 'User':
+        users = User.query.filter_by(id_twitch=id_twitch).first()
         return users
 
     @staticmethod
