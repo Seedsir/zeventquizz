@@ -7,6 +7,7 @@ from utils.constants import SCOPE
 
 from loguru import logger
 
+
 class TwitchAuth:
     auth_url = "https://id.twitch.tv/oauth2/authorize"
     token_url = "https://id.twitch.tv/oauth2/token"
@@ -68,9 +69,10 @@ class TwitchAuth:
             TwitchAuth.handle_refresh_tocken()
         twitch.access_token = twitch_response.json()['access_token']
         twitch.refresh_token = twitch_response.json()['refresh_token']
-        twitch.create_user(twitch)
-        return redirect(f'http://localhost:3000/authorisationCode/{twitch.access_token}') # TODO doit communiquer avec le front le token
-
+        user = twitch.create_user(twitch)
+        return redirect(f'http://localhost:3000/redirect/'
+                        f'{twitch.access_token}/'
+                        f'{user["username"]}')
 
     @staticmethod
     def handle_refresh_tocken():
@@ -95,11 +97,13 @@ class TwitchAuth:
             user.profile_image = "https://us.123rf.com/450wm/kchung/kchung1504/kchung150400781/38556950-3d-vert-n%C3%A9on-de-lumi%C3%A8re-lettre-z-isol%C3%A9-sur-fond-noir.jpg"
         if not user.is_user_already_exist(user_id):
             logger.info("L'utilisateur n'existe pas et donc va être créé")
-            user.create_user(username, user_id, twitch.refresh_token)
+            user.create_user(username, user_id, twitch.access_token, twitch.refresh_token)
             return user.render()
         user = user.get_user_by_id_twitch(user_id)
-        logger.info(f"L'utilisateur existe et les données sont récupéré en db. Type de user: {type(user)} et sa valeur: {user}")
+        logger.info(
+            f"L'utilisateur existe et les données sont récupéré en db. Type de user: {type(user)} et sa valeur: {user}")
         user.refresh_token = twitch.refresh_token
+        user.access_token = twitch.access_token
         user.profile_image = profile_image
         user.save_user(user)
         return user.render()

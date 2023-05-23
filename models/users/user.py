@@ -11,6 +11,7 @@ class User(db.Model):
     profile_image = db.Column(db.String())
     id_twitch = db.Column(db.String(), nullable=True)
     refresh_token = db.Column(db.String())
+    access_token = db.Column(db.String())
     battle = db.relationship('BattleQuizz', backref='user', lazy=True)
     team_id = db.Column(db.Integer, nullable=True)
     # TODO ajouter le team_id
@@ -21,6 +22,7 @@ class User(db.Model):
         self.profile_image = None
         self.id_twitch = id_twitch
         self.refresh_token = None
+        self.access_token = None
 
     def __str__(self):
         return self.username
@@ -29,8 +31,9 @@ class User(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @staticmethod
-    def create_user(username: str, id_twitch: str, refresh_token: Optional[str]) -> None:
+    def create_user(username: str, id_twitch: str, access_token: Optional[str], refresh_token: Optional[str]) -> None:
         user = User(username, id_twitch)
+        user.access_token = access_token
         user.refresh_token = refresh_token
         db.session.add(user)
         db.session.commit()
