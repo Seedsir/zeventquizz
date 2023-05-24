@@ -1,6 +1,7 @@
 import time
 
 from flask_api import FlaskAPI
+from flask_cors.extension import CORS
 import sqlalchemy
 
 from models.admin import admin
@@ -24,6 +25,7 @@ class InterceptHandler(logging.Handler):
 
 def create_app():
     app = FlaskAPI(__name__)
+    CORS(app)
     app.secret_key = 'super secret key'
     app.register_blueprint(questions_app)
     app.register_blueprint(answers_app)
