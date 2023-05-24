@@ -3,16 +3,17 @@ from flask import Blueprint, request, Response
 from models import User
 from models.battles.battle import BattleQuizz
 from flask import jsonify
-
+from loguru import logger
 app = Blueprint("battles", __name__)
 
 
-@app.route("/battles", methods=["POST"])
+@app.route("/battles/createBattle", methods=["POST"])
 def create_battle() -> 'Response':
-    name = str(request.data['name'])
-    streamers = list(request.data['streamers'])
-    theme = str(request.data['theme'])
-    question_number = int(request.data['question_number'])
+    logger.info("Je suis bien arrivé dans le fonction")
+    name = str(request.form['name'])
+    streamers = list(request.form['streamers'])
+    theme = str(request.form['theme'])
+    question_number = int(request.form['question_number'])
     BattleQuizz.create_battle(name, streamers, theme, question_number)
     return jsonify([{"status": 200, "message": "Battle created"}])
 
