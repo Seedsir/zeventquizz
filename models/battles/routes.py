@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, redirect
 
 from models import User
 from models.battles.battle import BattleQuizz
@@ -15,7 +15,7 @@ def create_battle() -> 'Response':
     theme = str(request.form['theme'])
     question_number = int(request.form['question_number'])
     BattleQuizz.create_battle(name, streamers, theme, question_number)
-    return jsonify([{"status": 200, "message": "Battle created"}])
+    return redirect(f'http://localhost:3000/startBattle')
 
 
 @app.route("/battles", methods=["GET"])
