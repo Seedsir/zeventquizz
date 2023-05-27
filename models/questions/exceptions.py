@@ -1,0 +1,2 @@
+class OuyOfNumberException (Exception):
+    pass

@@ -1,6 +1,6 @@
-from pprint import pprint
-
+from loguru import logger
 from models.db import db
+from models.questions.exceptions import OuyOfNumberException
 
 
 class Question(db.Model):
@@ -22,9 +22,16 @@ class Question(db.Model):
         return self.value
 
     @staticmethod
-    def select_questions_by_theme(theme: str) -> list['Question']:
-        questions = Question.query.filter_by(theme=theme).all()
-        return questions
+    def select_questions_by_theme(theme: str, question_number: int) -> list['Question']:
+        total_questions = Question.query.filter_by(theme=theme).all()
+        if question_number > len(total_questions):
+            logger.error(f"Le nombre de questions désiré est trop grand, max {len(total_questions)}")
+            raise OuyOfNumberException()
+        elif question_number == len(total_questions):
+            return total_questions
+        else:
+            questions = Question.query.filter_by(theme=theme).limit(question_number).all()
+            return questions
 
     @staticmethod
     def create_question(value: str, theme: str) -> None:

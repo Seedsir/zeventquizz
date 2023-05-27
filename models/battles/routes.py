@@ -33,6 +33,11 @@ def get_battle(battle_id: int) -> 'Response':
     return jsonify([BattleQuizz.get_battle_by_id(battle_id).render()])
 
 
+@app.route("/battles/name/<battle_name>", methods=["GET"])
+def get_batget_battle_by_nametle(battle_name: str) -> 'Response':
+    return jsonify([BattleQuizz.get_battle_by_name(battle_name).render()])
+
+
 @app.route("/battles/<battle_id>", methods=["DELETE"])
 def delete_battle(battle_id: int) -> 'Response':
     BattleQuizz.delete_battle_by(battle_id)

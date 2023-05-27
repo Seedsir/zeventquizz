@@ -6,9 +6,9 @@ app = Blueprint("questions", __name__)
 
 
 @app.route("/questions/<theme>", methods=["GET"])
-def get_questions_by_theme(theme: str) -> 'Response':
+def get_questions_by_theme(theme: str, question_number: int) -> 'Response':
     # TODO check if the theme exist
-    return jsonify([question.render() for question in Question.select_questions_by_theme(theme)])
+    return jsonify([question.render() for question in Question.select_questions_by_theme(theme, question_number)])
 
 
 @app.route("/questions", methods=["POST"])

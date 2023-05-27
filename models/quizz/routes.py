@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify, Response, request
 
 from models import Quizz
+from flask_cors import CORS
 
 app = Blueprint("quizz_app", __name__)
+CORS(app)
 
 
 @app.route("/quizz", methods=["POST"])
@@ -24,3 +26,8 @@ def delete_quizz_by_id(quizz_id: int) -> Response:
 @app.route("/quizz/<quizz_id>", methods=["GET"])
 def get_quizz_by_id(quizz_id: int) -> Response:
     return jsonify([Quizz.get_quizz(quizz_id).render()])
+
+
+@app.route("/quizz/<quizz_id>/questions", methods=["GET"])
+def get_question_quizz(quizz_id: int) -> Response:
+    return jsonify([question.render() for question in Quizz.get_questions_quizz(quizz_id)])

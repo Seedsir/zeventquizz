@@ -74,6 +74,11 @@ class BattleQuizz(db.Model):
         return battle
 
     @staticmethod
+    def get_battle_by_name(name: str) -> 'BattleQuizz':
+        battle = BattleQuizz.query.filter_by(name=name).first()
+        return battle
+
+    @staticmethod
     def delete_battle_by(unique_id: int) -> None:
         battle = BattleQuizz.query.filter_by(id=unique_id).first()
         db.session.delete(battle)

@@ -2,7 +2,11 @@ from sqlalchemy.orm import joinedload
 
 from models.db import db
 from models.questions.question import Question
-
+from loguru import logger
+questions_of_quizz = db.Table('questions_of_quizz',
+                       db.Column('quizz_id', db.Integer, db.ForeignKey('quizz.id'), primary_key=True),
+                       db.Column('question_id', db.Integer, db.ForeignKey('questions.id'), primary_key=True)
+                       )
 
 class Quizz(db.Model):
     __tablename__ = "quizz"
@@ -12,12 +16,12 @@ class Quizz(db.Model):
     theme = db.Column(db.String())
 
     battle_id = db.Column(db.Integer, db.ForeignKey('battles.id'), nullable=True)
-    questions = db.relationship('Question', backref='quizz', lazy=False)
+    questions = db.relationship('Question', secondary=questions_of_quizz, backref='questions')
 
     def __init__(self, theme: str, question_number: int):
-        self.theme = self.theme
-        self.question_number = question_number  # TODO reflechir au fait que ca ne sert a rien de le garder dans l'objet
-        self.questions = Question.select_questions_by_theme(theme)
+        self.theme = theme
+        self.questions_number = question_number  # TODO reflechir au fait que ca ne sert a rien de le garder dans l'objet
+        self.questions = Question.select_questions_by_theme(self.theme, self.question_number)
         # if question_number > len(self.questions):
         #     raise Exception(  # TODO create a correcte exception
         #         f"Limite maximale de questions dépassée, "
@@ -54,4 +58,12 @@ class Quizz(db.Model):
 
     @staticmethod
     def get_quizz(identifiant: int) -> 'Quizz':
-        return Quizz.query.options(joinedload(Quizz.questions)).filter_by(id=identifiant).first()
+        quizz = Quizz.query.get(identifiant)
+        return quizz
+        # return Quizz.query.options(joinedload(Quizz.questions)).filter_by(id=identifiant).first()
+
+    @staticmethod
+    def get_questions_quizz(identifiant: int) -> ['Question']:
+        questions = Question.query.join(questions_of_quizz).filter(questions_of_quizz.c.quizz_id == identifiant).all()
+        logger.info(f"Je recherche mes questions s'il vous plait: {questions}")
+        return questions
