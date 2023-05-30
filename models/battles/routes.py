@@ -4,6 +4,7 @@ from models import User
 from models.battles.battle import BattleQuizz
 from flask import jsonify
 from loguru import logger
+
 app = Blueprint("battles", __name__)
 
 
@@ -23,6 +24,21 @@ def get_all_active_battles() -> 'Response':
     return jsonify([battle.render() for battle in BattleQuizz.get_all_active_battles()])
 
 
+@app.route("/battles/active_battle", methods=['PUT'])
+def active_battle() -> None:
+    battle_id = int(request.data['battle_id'])
+    logger.info(f"Mon petit battle_id: {battle_id}")
+    if battle_id is None:
+        raise Exception()
+    BattleQuizz.start_battle(battle_id)
+
+
+@app.route("/battles/deactive_battle", methods=['PUT'])
+def deactive_battle() -> None:
+    battle_id = int(request.data['battle_id'])
+    BattleQuizz.end_battle(battle_id)
+
+
 @app.route("/battles/<battle_id>/subscribe_url", methods=["GET"])
 def get_subscribe_url(battle_id: int) -> 'Response':
     return jsonify([BattleQuizz.get_battle_by_id(battle_id).render()])
@@ -34,7 +50,7 @@ def get_battle(battle_id: int) -> 'Response':
 
 
 @app.route("/battles/name/<battle_name>", methods=["GET"])
-def get_batget_battle_by_nametle(battle_name: str) -> 'Response':
+def get_battle_by_name(battle_name: str) -> 'Response':
     return jsonify([BattleQuizz.get_battle_by_name(battle_name).render()])
 
 

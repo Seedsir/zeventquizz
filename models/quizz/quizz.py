@@ -20,8 +20,8 @@ class Quizz(db.Model):
 
     def __init__(self, theme: str, question_number: int):
         self.theme = theme
-        self.questions_number = question_number  # TODO reflechir au fait que ca ne sert a rien de le garder dans l'objet
-        self.questions = Question.select_questions_by_theme(self.theme, self.question_number)
+        self.questions_number = question_number
+        self.questions = Question.select_questions_by_theme(self.theme, self.questions_number)
         # if question_number > len(self.questions):
         #     raise Exception(  # TODO create a correcte exception
         #         f"Limite maximale de questions dépassée, "

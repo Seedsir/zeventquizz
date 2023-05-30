@@ -4,6 +4,7 @@ from models.db import db
 from models.quizz.quizz import Quizz
 import uuid
 from models.teams.team import Team
+from loguru import logger
 
 
 class BattleQuizz(db.Model):
@@ -24,7 +25,8 @@ class BattleQuizz(db.Model):
         self.streamer_list = streamers_list
         self.theme = theme
         self.questions_number = questions_number
-        self.quizz = [Quizz(theme, questions_number)]
+        logger.info(f"Mes values: {self.theme} {self.questions_number}")
+        self.quizz = [Quizz(self.theme, self.questions_number)]
         self.teams = self.create_teams()
 
     @property
@@ -37,16 +39,6 @@ class BattleQuizz(db.Model):
         for streamer in self.streamer_list:
             self.teams.append(Team(streamer))
         return self.teams
-
-    def start_battle(self) -> None:
-        self.is_active = True
-        db.session.add(self)
-        db.session.commit()
-
-    def end_battle(self) -> None:
-        self.is_active = False
-        db.session.add(self)
-        db.session.commit()
 
     def get_teams(self) -> List[Team]:
         return self.teams
@@ -76,10 +68,25 @@ class BattleQuizz(db.Model):
     @staticmethod
     def get_battle_by_name(name: str) -> 'BattleQuizz':
         battle = BattleQuizz.query.filter_by(name=name).first()
+        logger.info(f"Ma battle par nom: {battle}")
         return battle
 
     @staticmethod
     def delete_battle_by(unique_id: int) -> None:
         battle = BattleQuizz.query.filter_by(id=unique_id).first()
         db.session.delete(battle)
+        db.session.commit()
+
+    @staticmethod
+    def start_battle(battle_id: int) -> None:
+        battle = BattleQuizz.query.filter_by(id=battle_id).first()
+        battle.is_active = True
+        db.session.add(battle)
+        db.session.commit()
+
+    @staticmethod
+    def end_battle(battle_id: int) -> None:
+        battle = BattleQuizz.query.filter_by(id=battle_id).first()
+        battle.is_active = False
+        db.session.add(battle)
         db.session.commit()
