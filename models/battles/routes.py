@@ -24,19 +24,30 @@ def get_all_active_battles() -> 'Response':
     return jsonify([battle.render() for battle in BattleQuizz.get_all_active_battles()])
 
 
-@app.route("/battles/active_battle", methods=['PUT'])
-def active_battle() -> None:
-    battle_id = int(request.data['battle_id'])
-    logger.info(f"Mon petit battle_id: {battle_id}")
+@app.route("/battles/active_battle/<battle_id>", methods=['PUT'])
+def active_battle(battle_id: str) -> 'Response':
+    #logger.info(request.headers.get('Token'))
+    # TODO faire le check sur l'access token
     if battle_id is None:
         raise Exception()
-    BattleQuizz.start_battle(battle_id)
+    BattleQuizz.start_battle(int(battle_id))
+    return jsonify([{
+        "code": 200,
+        "message": f"La battle {battle_id} est correctement activée",
+    }])
 
 
-@app.route("/battles/deactive_battle", methods=['PUT'])
-def deactive_battle() -> None:
-    battle_id = int(request.data['battle_id'])
-    BattleQuizz.end_battle(battle_id)
+@app.route("/battles/deactive_battle/<battle_id>", methods=['PUT'])
+def deactive_battle(battle_id: str) -> 'Response':
+    # logger.info(request.headers.get('Token'))
+    # TODO faire le check sur l'access token
+    if battle_id is None:
+        raise Exception()
+    BattleQuizz.end_battle(int(battle_id))
+    return jsonify([{
+        "code": 200,
+        "message": f"La battle {battle_id} est correctement activée",
+    }])
 
 
 @app.route("/battles/<battle_id>/subscribe_url", methods=["GET"])
