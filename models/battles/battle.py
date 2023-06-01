@@ -90,3 +90,8 @@ class BattleQuizz(db.Model):
         battle.is_active = False
         db.session.add(battle)
         db.session.commit()
+
+    @staticmethod
+    def get_the_quizz_of_the_battle(battle_id: int) -> 'Quizz':
+        logger.info("Mais que c'est pénible.....")
+        return Quizz.query.filter_by(battle_id=battle_id).first()

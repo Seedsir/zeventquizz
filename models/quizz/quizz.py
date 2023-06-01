@@ -60,7 +60,7 @@ class Quizz(db.Model):
     def get_quizz(identifiant: int) -> 'Quizz':
         quizz = Quizz.query.get(identifiant)
         return quizz
-        # return Quizz.query.options(joinedload(Quizz.questions)).filter_by(id=identifiant).first()
+
 
     @staticmethod
     def get_questions_quizz(identifiant: int) -> ['Question']:

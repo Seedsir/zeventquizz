@@ -87,3 +87,8 @@ def select_team(battle_id: int, team_id: int, username: str) -> 'Response':
         "status_code": 200,
         "message": f"{username} à bien rejoint l'équipe {team_id}"
     }])
+
+
+@app.route("/battles/<battle_id>/quizz_id", methods=["GET"])
+def get_quizz_of_the_battle(battle_id: int) -> 'Response':
+    return jsonify([BattleQuizz.get_the_quizz_of_the_battle(battle_id).render()])
