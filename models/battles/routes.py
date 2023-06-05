@@ -1,3 +1,5 @@
+import re
+
 from flask import Blueprint, request, Response, redirect
 
 from models import User
@@ -12,7 +14,7 @@ app = Blueprint("battles", __name__)
 def create_battle() -> 'Response':
     logger.info("Je suis bien arrivé dans le fonction")
     name = str(request.form['name'])
-    streamers = list(request.form['streamers'])
+    streamers = re.findall(r"(\w+)", request.form['streamers'])
     theme = str(request.form['theme'])
     question_number = int(request.form['question_number'])
     BattleQuizz.create_battle(name, streamers, theme, question_number)

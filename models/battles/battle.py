@@ -25,20 +25,20 @@ class BattleQuizz(db.Model):
         self.streamer_list = streamers_list
         self.theme = theme
         self.questions_number = questions_number
-        logger.info(f"Mes values: {self.theme} {self.questions_number}")
         self.quizz = [Quizz(self.theme, self.questions_number)]
         self.teams = self.create_teams()
 
     @property
     def subscribe_url(self) -> str:
         token = uuid.uuid4()
-        url = f"http://127.0.0.1:5000/battle/{self.theme}/{token}"
+        url = f"http://127.0.0.1:3000/startBattle/{self.theme}/{token}"
         return urlencode(url)
 
     def create_teams(self) -> List['Team']:
+        team_list = []
         for streamer in self.streamer_list:
-            self.teams.append(Team(streamer))
-        return self.teams
+            team_list.append(Team(streamer))
+        return team_list
 
     def get_teams(self) -> List[Team]:
         return self.teams
@@ -56,7 +56,7 @@ class BattleQuizz(db.Model):
     @staticmethod
     def create_battle(name: str, streamers: list, theme: str, questions_number: int) -> None:
         battle = BattleQuizz(name, streamers, theme, questions_number)
-        battle.stremers_number = len(streamers)
+        battle.streamers_number = len(streamers)
         db.session.add(battle)
         db.session.commit()
 
