@@ -22,7 +22,7 @@ def create_battle() -> 'Response':
 
 
 @app.route("/battles", methods=["GET"])
-def get_all_active_battles() -> 'Response':
+def get_all_created_battles() -> 'Response':
     return jsonify([battle.render() for battle in BattleQuizz.get_all_active_battles()])
 
 

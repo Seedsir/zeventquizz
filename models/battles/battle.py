@@ -16,7 +16,7 @@ class BattleQuizz(db.Model):
     questions_number = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         nullable=True)
-    is_active = db.Column(db.Boolean(), nullable=False, default=False)
+    status = db.Column(db.String(), default="CREATED")
     teams = db.relationship('Team', backref='battlequizz', lazy=False)
     quizz = db.relationship('Quizz', backref='battlequizz', lazy=False)
 
@@ -50,8 +50,8 @@ class BattleQuizz(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @staticmethod
-    def get_all_active_battles() -> list['BattleQuizz']:
-        return BattleQuizz.query.filter_by(is_active=True).all()
+    def get_all_created_battles() -> list['BattleQuizz']:
+        return BattleQuizz.query.filter_by(status="CREATED").all()
 
     @staticmethod
     def create_battle(name: str, streamers: list, theme: str, questions_number: int) -> None:
@@ -80,14 +80,14 @@ class BattleQuizz(db.Model):
     @staticmethod
     def start_battle(battle_id: int) -> None:
         battle = BattleQuizz.query.filter_by(id=battle_id).first()
-        battle.is_active = True
+        battle.status = "ACTIVATED"
         db.session.add(battle)
         db.session.commit()
 
     @staticmethod
     def end_battle(battle_id: int) -> None:
         battle = BattleQuizz.query.filter_by(id=battle_id).first()
-        battle.is_active = False
+        battle.status = "DEACTIVATED"
         db.session.add(battle)
         db.session.commit()
 

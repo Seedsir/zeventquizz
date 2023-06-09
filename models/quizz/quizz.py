@@ -65,5 +65,5 @@ class Quizz(db.Model):
     @staticmethod
     def get_questions_quizz(identifiant: int) -> ['Question']:
         questions = Question.query.join(questions_of_quizz).filter(questions_of_quizz.c.quizz_id == identifiant).all()
-        logger.info(f"Je recherche mes questions s'il vous plait: {questions}")
+        logger.info(f"Identifiant={identifiant}, Je recherche mes questions s'il vous plait: {questions}")
         return questions

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, Response
-
+from loguru import logger
 from models import Answer
 
 app = Blueprint("answers", __name__)
@@ -12,10 +12,8 @@ def get_all_possible_answers(question_id: int) -> 'Response':
 
 @app.route("/answers/<question_id>/answer", methods=["GET"])
 def get_good_answer(question_id: int) -> 'Response':
-    list_answer = []
     true_answer = [answer for answer in Answer.get_good_answer(question_id)][0].render()
-    list_answer.append(true_answer)
-    return jsonify(list_answer)
+    return jsonify(true_answer)
 
 
 @app.route("/answers", methods=["POST"])

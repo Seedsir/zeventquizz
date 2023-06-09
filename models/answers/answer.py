@@ -1,6 +1,4 @@
-import json
-from pprint import pprint
-
+from loguru import logger
 from models.db import db
 
 
