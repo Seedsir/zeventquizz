@@ -23,7 +23,7 @@ def create_battle() -> 'Response':
 
 @app.route("/battles", methods=["GET"])
 def get_all_created_battles() -> 'Response':
-    return jsonify([battle.render() for battle in BattleQuizz.get_all_active_battles()])
+    return jsonify([battle.render() for battle in BattleQuizz.get_all_created_battles()])
 
 
 @app.route("/battles/active_battle/<battle_id>", methods=['PUT'])
@@ -78,17 +78,9 @@ def delete_battle(battle_id: int) -> 'Response':
 
 @app.route("/battles/<battle_id>/teams", methods=["GET"])
 def get_teams_battle(battle_id: int) -> 'Response':
-    battle = BattleQuizz.get_battle_by_id(battle_id)
-    return jsonify([team.render() for team in battle.get_teams()])
+    teams = BattleQuizz.get_teams_of_battle(battle_id)
+    return jsonify([team.render() for team in teams])
 
-
-@app.route("/battles/<battle_id>/<team_id>/<username>", methods=["PUT"])
-def select_team(battle_id: int, team_id: int, username: str) -> 'Response':
-    User.select_a_team(username, team_id)
-    return jsonify([{
-        "status_code": 200,
-        "message": f"{username} à bien rejoint l'équipe {team_id}"
-    }])
 
 
 @app.route("/battles/<battle_id>/quizz_id", methods=["GET"])

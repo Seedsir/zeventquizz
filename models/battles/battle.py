@@ -40,9 +40,6 @@ class BattleQuizz(db.Model):
             team_list.append(Team(streamer))
         return team_list
 
-    def get_teams(self) -> List[Team]:
-        return self.teams
-
     def __str__(self):
         return self.name
 
@@ -51,7 +48,9 @@ class BattleQuizz(db.Model):
 
     @staticmethod
     def get_all_created_battles() -> list['BattleQuizz']:
-        return BattleQuizz.query.filter_by(status="CREATED").all()
+        battles = BattleQuizz.query.filter_by(status="CREATED").all()
+        logger.info(f"Voici mes battles: {battles}")
+        return battles
 
     @staticmethod
     def create_battle(name: str, streamers: list, theme: str, questions_number: int) -> None:
@@ -95,3 +94,8 @@ class BattleQuizz(db.Model):
     def get_the_quizz_of_the_battle(battle_id: int) -> 'Quizz':
         logger.info("Mais que c'est pénible.....")
         return Quizz.query.filter_by(battle_id=battle_id).first()
+
+    @staticmethod
+    def get_teams_of_battle(battle_id: int) -> List[Team]:
+        teams = Team.query.filter_by(battle_id=battle_id).all()
+        return teams

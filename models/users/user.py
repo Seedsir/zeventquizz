@@ -75,12 +75,7 @@ class User(db.Model):
         db.session.delete(user)
         db.session.commit()
 
-    @staticmethod
-    def select_a_team(username, team_id) -> None:
-        user = User.query.filter_by(username=username).first()
-        user.team_id = int(team_id)
-        db.session.add(user)
-        db.session.commit()
+
 
 
 

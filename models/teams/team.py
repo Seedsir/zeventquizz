@@ -2,6 +2,7 @@ from models.db import db
 from models.scores.score import Score
 from models.users.user import Player, User
 from loguru import logger
+from sqlalchemy import insert
 
 teams_users = db.Table('teams_users',
                        db.Column('team_id', db.Integer, db.ForeignKey('teams.id'), primary_key=True),
@@ -59,13 +60,6 @@ class Team(db.Model):
         db.session.commit()
 
     @staticmethod
-    def add_player_to_team(team_id: int, user_id: int) -> None:
-        user = User.query.filter_by(id=user_id).first()
-        user.team_id = team_id
-        db.session.add(user)
-        db.session.commit()
-
-    @staticmethod
     def get_score(team_id: int, battle_id: int) -> dict:
         score = Score.query.filter_by(team_id=team_id, battle_id=battle_id).first()
         # if score is None:
@@ -77,7 +71,14 @@ class Team(db.Model):
 
     @staticmethod
     def update_score(battle_id: int, team_id: int, point: int) -> None:
-        score = Score.query.filter_by(battle_id=battle_id ,team_id=team_id).first()
+        score = Score.query.filter_by(battle_id=battle_id, team_id=team_id).first()
         score.calculate_score(int(point))
         db.session.add(score)
+        db.session.commit()
+
+    @staticmethod
+    def add_player_to_team(username: str, team_id: int) -> None:
+        user = User.query.filter_by(username=username).first()
+        stmt = insert(teams_users).values(team_id=team_id, user_id=user.id)
+        db.session.execute(stmt)
         db.session.commit()

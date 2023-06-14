@@ -1,18 +1,19 @@
 from typing import List, Dict
-
-from flask import Blueprint, jsonify, request, Response
+from loguru import logger
+from flask import Blueprint, jsonify, request, Response, redirect
 
 from models import Team
 
 app = Blueprint("teams", __name__)
 
 
-@app.route("/teams/<team_id>/<user_id>", methods=["PUT"])
-def add_player(team_id: int, user_id: int) -> 'Response':
-    Team.add_player_to_team(team_id, user_id)
+@app.route("/teams/<team_id>/<username>", methods=["PUT"])
+def add_player(team_id: int, username: str) -> 'Response':
+    Team.add_player_to_team(username, int(team_id))
+    logger.info(f"User: {username} correctly added in the team id: {team_id}")
     return jsonify([{
-        "status": "OK",
-        "message": f"Utilisateur {user_id} bien ajouté à l'équipe {team_id}"
+        "status_code": 200,
+        "message": f"User: {username} correctly added in the team id: {team_id}",
     }])
 
 
