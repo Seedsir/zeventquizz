@@ -1,9 +1,10 @@
 import time
 
-from flask_api import FlaskAPI
+from flask import Flask
+# from flask_api import FlaskAPI
 from flask_cors.extension import CORS
 import sqlalchemy
-
+from sqlalchemy import text
 from models.admin import admin
 from models.answers.routes import app as answers_app
 from models.battles.routes import app as battles_app
@@ -24,7 +25,7 @@ class InterceptHandler(logging.Handler):
 
 
 def create_app():
-    app = FlaskAPI(__name__)
+    app = Flask(__name__)
     CORS(app)
     app.secret_key = 'super secret key'
     app.register_blueprint(questions_app)
@@ -54,7 +55,7 @@ def create_database(app):
         # to check that we can query the database before trying to create the db
         for i in range(4):
             try:
-                db.session.execute('SELECT 1')
+                db.session.execute(text('SELECT 1'))
             except sqlalchemy.exc.OperationalError:
                 time_to_sleep = i * 2
                 print(f'Database not started yet, sleeping {time_to_sleep}')
